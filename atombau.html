@@ -294,6 +294,7 @@ section { animation: fadeUp 0.4s ease-out both; }
   <div class="lernziele"><h3>Lernziele</h3><ul>
     <li>Sie können das Atommodell von Dalton beschreiben und seine Grenzen benennen.</li>
     <li>Sie können die Grundregel elektrischer Ladungen formulieren: Gleiche Ladungen stossen sich ab, ungleiche ziehen sich an.</li>
+    <li>Sie können qualitativ beschreiben, wie Abstand und Ladung die elektrostatische Kraft beeinflussen (Coulomb-Gesetz).</li>
     <li>Sie können den glühelektrischen Effekt beschreiben und seine Bedeutung für die Entdeckung des Elektrons einordnen.</li>
     <li>Sie können erklären, warum das Dalton-Modell erweitert werden musste.</li>
   </ul></div>
@@ -341,6 +342,34 @@ section { animation: fadeUp 0.4s ease-out both; }
   <div class="merksatz"><div class="merksatz-label">Merksatz</div>
     <p><strong>Gleiche Ladungen stossen sich ab</strong> (+ und + oder − und −). <strong>Ungleiche Ladungen ziehen sich an</strong> (+ und −). Diese Grundregel erklärt alle elektrostatischen Phänomene und wird uns beim Verständnis des Atomaufbaus immer wieder begegnen.</p>
   </div>
+
+  <h4>Die elektrostatische Kraft: Das Coulomb-Gesetz</h4>
+  <p>Die Anziehung und Abstossung zwischen geladenen Teilchen ist nicht einfach «an oder aus» — sie hängt davon ab, <strong>wie stark</strong> die Teilchen geladen sind und <strong>wie weit</strong> sie voneinander entfernt sind. Diese Kraft nennt man die <strong>elektrostatische Kraft</strong>. Sie ist vergleichbar mit der Gravitationskraft und der magnetischen Kraft.</p>
+  <p>Die elektrostatische Kraft zwischen geladenen Körpern <strong>nimmt mit zunehmendem Abstand stark ab</strong> und <strong>steigt mit zunehmender Ladung</strong> der Körper. Den Raum, in dem ein geladener Körper elektrostatische Kräfte ausübt, bezeichnet man als sein <strong>elektrisches Feld</strong>.</p>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Elektrisches Feld</div>
+    <p>Der Raum um einen geladenen Körper, in dem elektrostatische Kräfte auf andere geladene Körper wirken.</p>
+  </div>
+
+  <p>Das Coulomb-Gesetz beschreibt die elektrostatische Kraft mit einer Formel:</p>
+
+  <table class="data-table" style="max-width:540px;">
+    <thead><tr><th colspan="2">Coulomb-Gesetz</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="text-align:center; font-family:var(--serif); padding:18px 16px; width:45%; vertical-align:middle;"><span style="font-size:1.5rem;"><em>F</em> = <em>k</em> · </span><span style="display:inline-block; text-align:center; vertical-align:middle; font-size:1.2rem; line-height:1.3;"><span style="display:block; padding:0 4px;"><em>Q</em><sub>1</sub> · <em>Q</em><sub>2</sub></span><span style="display:block; border-top:2px solid currentColor; padding:2px 4px 0;"><em>r</em><sup>2</sup></span></span></td>
+        <td style="font-size:0.88rem; line-height:1.9; padding:14px 16px;">
+          <strong>F:</strong> elektrostatische Kraft<br>
+          <strong>Q<sub>1</sub>, Q<sub>2</sub>:</strong> Ladungen der Körper<br>
+          <strong>r:</strong> Abstand zwischen den Körpern<br>
+          <strong>k:</strong> Konstante (abhängig vom Medium: Vakuum, Luft, Wasser, …)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Sie müssen diese Formel nicht auswendig kennen, jedoch verstehen, dass ein <strong>grösserer Abstand (r)</strong> die elektrostatische Kraft <strong>verkleinert</strong> und <strong>grössere Ladungen (Q)</strong> die elektrostatische Kraft <strong>vergrössern</strong>.</p>
 
   <h4>Simulation: Ballons und statische Elektrizität</h4>
   <p>Erkunden Sie die PhET-Simulation, um das Prinzip der Ladungsübertragung und der Anziehung/Abstossung auf Teilchenebene zu sehen. Reiben Sie den Ballon am Pullover und beobachten Sie, was mit den Ladungen geschieht.</p>
@@ -434,6 +463,16 @@ section { animation: fadeUp 0.4s ease-out both; }
       <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Weil positive Ladungen leichter sind als negative.</div>
       <div class="feedback correct">Genau! Atome sind nach aussen neutral. Wenn sie negative Elektronen enthalten, muss die negative Ladung durch positive Ladung ausgeglichen werden.</div>
       <div class="feedback wrong">Überlege: Atome sind nach aussen elektrisch neutral (weder + noch −). Wenn sie negative Elektronen enthalten, was braucht es zum Ausgleich?</div>
+    </div>
+
+    <div class="question" id="q1-5">
+      <div class="q-text"><span class="q-num">5</span>Zwei geladene Kugeln ziehen sich an. Was passiert mit der elektrostatischen Kraft, wenn man den Abstand zwischen den Kugeln verdoppelt?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Die Kraft wird doppelt so gross.</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Die Kraft bleibt gleich.</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Die Kraft wird halb so gross.</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Die Kraft sinkt auf ein Viertel.</div>
+      <div class="feedback correct">Richtig! Im Coulomb-Gesetz steht r² im Nenner. Wenn sich der Abstand verdoppelt (2r), wird r² zu (2r)² = 4r² — die Kraft sinkt auf ein Viertel.</div>
+      <div class="feedback wrong">Schau dir die Formel genau an: Der Abstand r steht im Nenner und wird quadriert (r²). Was passiert also mit der Kraft, wenn r doppelt so gross wird?</div>
     </div>
   </div>
 
@@ -801,6 +840,7 @@ section { animation: fadeUp 0.4s ease-out both; }
       <thead><tr><th>Begriff</th><th>Erklärung</th></tr></thead>
       <tbody>
         <tr><td>Elektrische Ladung</td><td>Grundeigenschaft von Materie; zwei Arten (+/−); gleiche stossen sich ab, ungleiche ziehen sich an</td></tr>
+        <tr><td>Coulomb-Gesetz</td><td>Die elektrostatische Kraft wächst mit grösseren Ladungen und sinkt mit grösserem Abstand (quadratisch: F ∝ Q₁·Q₂ / r²)</td></tr>
         <tr><td>Glühelektrischer Effekt</td><td>Austritt von Elektronen aus erhitztem Metall; Beweis für die innere Struktur von Atomen</td></tr>
         <tr><td>Elektron (e⁻)</td><td>Negativ geladenes Teilchen in der Atomhülle, Masse ≈ 0 u</td></tr>
         <tr><td>Proton (p⁺)</td><td>Positiv geladenes Teilchen im Atomkern, Masse ≈ 1 u</td></tr>
