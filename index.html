@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemie GLF · 1. Gymnasium · Va </title>
+<title>Chemie · 1. Gymnasium</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -234,13 +234,13 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
       </div>
     </a>
 
-    <a href="atombau.html" class="topic-card">
+    <a href="atombau.html" class="topic-card locked">
+      <span class="lock-badge">&#x1F512;</span>
       <div class="topic-num">Thema 4</div>
       <div class="topic-title">Atombau</div>
       <div class="topic-desc">Dalton-Modell, elektrische Ladungen, Rutherford-Streuversuch, Kern-Hülle-Modell, Elementarteilchen, Isotope.</div>
       <div class="topic-footer">
-        <span class="topic-tag tag-active">Phase 1 verfügbar</span>
-        <span class="topic-arrow">&rarr;</span>
+        <span class="topic-tag tag-soon">Kommt bald</span>
       </div>
     </a>
 
@@ -251,6 +251,50 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
     Bei Fragen wende dich an deine Lehrperson.
   </div>
 </main>
+
+<script>
+// Auto-unlock: prüft ob die HTML-Datei existiert und schaltet die Karte frei
+(async function() {
+  const cards = document.querySelectorAll('.topic-card');
+  for (const card of cards) {
+    const href = card.getAttribute('href');
+    if (!href || href.startsWith('http')) continue;
+    try {
+      const res = await fetch(href, { method: 'HEAD' });
+      if (res.ok) {
+        // Datei existiert → freischalten
+        card.classList.remove('locked');
+        const lock = card.querySelector('.lock-badge');
+        if (lock) lock.remove();
+        const tag = card.querySelector('.topic-tag');
+        if (tag) {
+          tag.classList.remove('tag-soon');
+          tag.classList.add('tag-active');
+          tag.textContent = 'Verfügbar';
+        }
+        // Arrow hinzufügen falls nicht vorhanden
+        if (!card.querySelector('.topic-arrow')) {
+          const footer = card.querySelector('.topic-footer');
+          if (footer) {
+            const arrow = document.createElement('span');
+            arrow.className = 'topic-arrow';
+            arrow.innerHTML = '&rarr;';
+            footer.appendChild(arrow);
+          }
+        }
+      } else {
+        // Datei existiert nicht → sperren
+        card.classList.add('locked');
+        card.removeAttribute('href');
+      }
+    } catch (e) {
+      // Fehler (z.B. CORS) → gesperrt lassen
+      card.classList.add('locked');
+      card.removeAttribute('href');
+    }
+  }
+})();
+</script>
 
 </body>
 </html>
