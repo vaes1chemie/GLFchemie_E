@@ -570,7 +570,7 @@ section { animation: fadeUp 0.4s ease-out both; }
     <a class="task-card teams" href="https://teams.microsoft.com/l/entity/66aeee93-507d-479a-a3ef-8f494af43945/classroom?context=%7B%22subEntityId%22%3A%22%7B%5C%22version%5C%22%3A%5C%221.0%5C%22%2C%5C%22config%5C%22%3A%7B%5C%22classes%5C%22%3A%5B%7B%5C%22id%5C%22%3A%5C%22a9075b00-e255-4977-9631-a64a5fb9d9ed%5C%22%2C%5C%22assignmentIds%5C%22%3A%5B%5C%228a1cbd58-90a9-4b69-a2a3-3a29c18ea05d%5C%22%5D%7D%5D%7D%2C%5C%22action%5C%22%3A%5C%22navigate%5C%22%2C%5C%22view%5C%22%3A%5C%22assignment-viewer%5C%22%2C%5C%22appId%5C%22%3A%5C%22ccb65bcd-04ba-421a-8791-a299a70904b6%5C%22%2C%5C%22deeplinkType%5C%22%3A4%7D%22%2C%22channelId%22%3Anull%7D" target="_blank">
       <div class="task-card-icon">&#9998;</div>
       <div class="task-card-title">Aufgaben 1.1 – 1.5 bearbeiten</div>
-      <div class="task-card-desc">Teams-Aufgabe · Erklärungen, Argumente und Skizzen · Stift + Text</div>
+      <div class="task-card-desc">Übungsaufgaben auf OneNote</div>
     </a>
   </div>
 </section>
@@ -787,7 +787,7 @@ section { animation: fadeUp 0.4s ease-out both; }
     <a class="task-card teams" href="https://teams.microsoft.com/l/entity/66aeee93-507d-479a-a3ef-8f494af43945/classroom?context=%7B%22subEntityId%22%3A%22%7B%5C%22version%5C%22%3A%5C%221.0%5C%22%2C%5C%22config%5C%22%3A%7B%5C%22classes%5C%22%3A%5B%7B%5C%22id%5C%22%3A%5C%22a9075b00-e255-4977-9631-a64a5fb9d9ed%5C%22%2C%5C%22assignmentIds%5C%22%3A%5B%5C%22f8ae5553-7ac1-4719-93f7-2df3a6434711%5C%22%5D%7D%5D%7D%2C%5C%22action%5C%22%3A%5C%22navigate%5C%22%2C%5C%22view%5C%22%3A%5C%22assignment-viewer%5C%22%2C%5C%22appId%5C%22%3A%5C%22ccb65bcd-04ba-421a-8791-a299a70904b6%5C%22%2C%5C%22deeplinkType%5C%22%3A4%7D%22%2C%22channelId%22%3Anull%7D" target="_blank">
       <div class="task-card-icon">&#9998;</div>
       <div class="task-card-title">Aufgaben 2.1 – 2.3 + Atommodell-Skizze</div>
-      <div class="task-card-desc">Teams-Aufgabe · Berechnungen, Erklärungen und Skizze des Kern-Hülle-Modells</div>
+      <div class="task-card-desc">Übungsaufgaben auf OneNote</div>
     </a>
   </div>
 </section>
@@ -800,7 +800,6 @@ section { animation: fadeUp 0.4s ease-out both; }
     <div class="lesson-number">Lektion 03</div>
     <h2>Elementarteilchen, Isotope und Nuklidsymbole</h2>
   </div>
-
   <div class="lernziele"><h3>Lernziele</h3><ul>
     <li>Sie können die drei Elementarteilchen (Proton, Neutron, Elektron) mit ihren Eigenschaften benennen.</li>
     <li>Sie können Ordnungszahl und Massenzahl definieren und aus dem PSE ablesen.</li>
@@ -808,6 +807,7 @@ section { animation: fadeUp 0.4s ease-out both; }
     <li>Sie können die Nuklidsymbol-Schreibweise anwenden.</li>
     <li>Sie können die Teilchenzusammensetzung eines Atoms aus dem Nuklidsymbol bestimmen.</li>
   </ul></div>
+
 
   <h3>3.1 Die drei Elementarteilchen des Atoms</h3>
   <p>Nach den bisherigen Erkenntnissen wissen wir: Atome bestehen aus einem positiv geladenen Kern und einer Hülle mit Elektronen. Im Kern befinden sich zwei Arten von Teilchen – <strong>Protonen</strong> und <strong>Neutronen</strong>:</p>
@@ -944,14 +944,14 @@ section { animation: fadeUp 0.4s ease-out both; }
     </div>
   </div>
 
-  <!-- TASK CARD L3 -->
+<!-- TASK CARD L3 -->
   <h4>Aufgaben zu Lektion 3</h4>
   <div class="task-links" style="grid-template-columns: 1fr;">
-    <a class="task-card teams" style="opacity: 0.45; pointer-events: none; cursor: not-allowed;">
-      <div class="task-card-icon">&#9998;</div>
-      <div class="task-card-title">Aufgaben 3.1 – 3.5 + Isotopen-Skizze</div>
-      <div class="task-card-desc">Teams-Aufgabe · wird freigeschaltet</div>
-    </a>
+    <div class="task-card onenote" style="cursor:pointer;" onclick="this.querySelector('.task-hint').classList.toggle('show')">
+      <div class="task-card-icon">📝</div>
+      <div class="task-card-title">Aufgaben 3.1 – 3.4</div>
+      <div class="task-hint">Die Aufgaben finden Sie in Ihrem persönlichen Ordner im Klassennotizbuch <strong>GKG_Ch_2029_E</strong> unter <strong>4 Atombau – Aufgaben Atombau</strong></div>
+    </div>
   </div>
 </section>
 
