@@ -259,15 +259,22 @@ section { animation: fadeUp 0.4s ease-out both; }
   <a href="#L3" class="nav-item"><span class="nav-dot"></span>L3 – Teilchen &amp; Isotope</a>
   <a href="#zusammenfassung" class="nav-item"><span class="nav-dot"></span>Zusammenfassung</a>
 
-  <div class="sidebar-phase">Phase 2 · Lektionen 4–6</div>
+  <div class="sidebar-phase">Phase 2 · Lektionen 4–7</div>
   <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>L4 – Schalenmodell (Bohr) <span class="lock-icon">&#x1F512;</span></a>
-  <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>L5 – Elektronenkonfiguration <span class="lock-icon">&#x1F512;</span></a>
-  <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>L6 – PSE-Zusammenhang <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>L5 – Orbitalmodell <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>L6 – Elektronenkonfiguration <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>L7 – Flammenfärbung <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="2"><span class="nav-dot"></span>Zusammenfassung <span class="lock-icon">&#x1F512;</span></a>
 
-  <div class="sidebar-phase">Phase 3 · Lektionen 7–9</div>
-  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L7 – Ionen &amp; Ionisierung <span class="lock-icon">&#x1F512;</span></a>
-  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L8 – Orbitalmodell <span class="lock-icon">&#x1F512;</span></a>
-  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L9 – Vertiefung <span class="lock-icon">&#x1F512;</span></a>
+  <div class="sidebar-phase">Phase 3 · Lektionen 8–10</div>
+  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L8 – Valenzelektronen <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L9 – PSE <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L10 – Ionen &amp; Ionisierung <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>Zusammenfassung <span class="lock-icon">&#x1F512;</span></a>
+
+  <div class="sidebar-phase">Phase 4 · Lektionen 11–12</div>
+  <a class="nav-item locked" data-phase="4"><span class="nav-dot"></span>L11 – Repetition <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="4"><span class="nav-dot"></span>L12 – Ausblick Bindungstypen <span class="lock-icon">&#x1F512;</span></a>
 </nav>
 
 <!-- ======== MAIN ======== -->
@@ -1003,7 +1010,7 @@ section { animation: fadeUp 0.4s ease-out both; }
   </div>
 
   <p id="phase2-teaser" style="text-align:center; color:var(--text-muted); margin-top:44px; font-size:0.9rem;">
-    <strong>Weiter geht's in Phase 2:</strong> Schalenmodell, Orbitalmodell und Auffüllregeln
+    <strong>Weiter geht's in Phase 2:</strong> Schalenmodell, Orbitalmodell, Elektronenkonfiguration und Flammenfärbung
   </p>
 
   <!-- FORMS MC: End of Phase -->
@@ -1071,7 +1078,8 @@ function selectOption(el) {
 (async function() {
   const phases = [
     { num: '2', file: 'atombau-phase2.html' },
-    { num: '3', file: 'atombau-phase3.html' }
+    { num: '3', file: 'atombau-phase3.html' },
+    { num: '4', file: 'atombau-phase4.html' }
   ];
   for (const phase of phases) {
     try {
@@ -1089,7 +1097,7 @@ function selectOption(el) {
         if (phase.num === '2') {
           const teaser = document.getElementById('phase2-teaser');
           if (teaser) {
-            teaser.innerHTML = '<a href="' + phase.file + '" style="color:var(--accent); text-decoration:none; font-weight:600;">&rarr; <strong>Weiter zu Phase 2:</strong> Schalenmodell, Orbitalmodell und Auffüllregeln</a>';
+            teaser.innerHTML = '<a href="' + phase.file + '" style="color:var(--accent); text-decoration:none; font-weight:600;">&rarr; <strong>Weiter zu Phase 2:</strong> Schalenmodell, Orbitalmodell, Elektronenkonfiguration und Flammenfärbung</a>';
           }
         }
       }
