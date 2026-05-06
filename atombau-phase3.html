@@ -39,12 +39,12 @@
   --block-p: #ffe2c8; --block-p-text: #6e3b14;
   --block-d: #d8eed3; --block-d-text: #2c5b1d;
   --block-f: #ecd9f0; --block-f-text: #4f1f5b;
-  --block-noble: #e9d6f0; --block-noble-text: #54265b;
 
   --metal: #fde7c0;
   --halbmetal: #ffe7a8;
   --nichtmetal: #d4ead7;
   --edelgas: #e6d0e8;
+  --wasserstoff: #fff0d8;
 
   --serif: 'DM Serif Display', Georgia, serif;
   --sans: 'DM Sans', -apple-system, sans-serif;
@@ -324,6 +324,37 @@ em { font-style: italic; color: var(--text-muted); }
   margin-right: 6px;
 }
 
+.pse-grid-wrap {
+  position: relative;
+  padding-top: 14px;
+  padding-left: 36px;
+}
+.pse-axis-group {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.pse-axis-period {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 .pse-grid {
   display: grid;
   grid-template-columns: 22px repeat(18, 1fr);
@@ -390,13 +421,13 @@ em { font-style: italic; color: var(--text-muted); }
 .pse-cell.block-p { background: var(--block-p); color: var(--block-p-text); }
 .pse-cell.block-d { background: var(--block-d); color: var(--block-d-text); }
 .pse-cell.block-f { background: var(--block-f); color: var(--block-f-text); }
-.pse-cell.block-noble { background: var(--block-noble); color: var(--block-noble-text); }
 
 /* Metall-Modus */
-.pse-mode-metall .pse-cell.is-metal     { background: var(--metal); color: #5a3010; }
-.pse-mode-metall .pse-cell.is-halbmetal { background: var(--halbmetal); color: #6b4d10; }
-.pse-mode-metall .pse-cell.is-nichtmetal{ background: var(--nichtmetal); color: #1f4524; }
-.pse-mode-metall .pse-cell.is-edelgas   { background: var(--edelgas); color: #4f1f5b; }
+.pse-mode-metall .pse-cell.is-metal       { background: var(--metal); color: #5a3010; }
+.pse-mode-metall .pse-cell.is-halbmetal   { background: var(--halbmetal); color: #6b4d10; }
+.pse-mode-metall .pse-cell.is-nichtmetal  { background: var(--nichtmetal); color: #1f4524; }
+.pse-mode-metall .pse-cell.is-edelgas     { background: var(--edelgas); color: #4f1f5b; }
+.pse-mode-metall .pse-cell.is-wasserstoff { background: var(--wasserstoff); color: #6b4d10; }
 
 /* Hauptgruppe-Highlight */
 .pse-cell.highlight-group { box-shadow: 0 0 0 2px var(--accent); z-index: 4; }
@@ -700,20 +731,46 @@ section { animation: fadeUp 0.4s ease-out both; }
         <div class="timeline-event">
           <div class="timeline-year">1829</div>
           <div class="timeline-name">Johann W. Döbereiner</div>
-          <p>Erkennt <strong>Triaden</strong>: drei chemisch ähnliche Elemente, deren mittlere Atommasse das Mittel der äusseren ist. Beispiel: Cl (35,5) – Br (79,9) – I (126,9).</p>
+          <p>Erkennt <strong>«Triaden»</strong>: Gruppen aus drei Elementen mit ähnlichen chemischen Eigenschaften.</p>
         </div>
         <div class="timeline-event">
           <div class="timeline-year">1869</div>
           <div class="timeline-name">Lothar Meyer &amp;<br>Dimitri Mendelejew</div>
-          <p>Unabhängig voneinander ordnen sie Elemente nach steigender Atommasse und entdecken eine <strong>Periodizität</strong> der Eigenschaften — die «magische Zahl 8».</p>
+          <p>Unabhängig voneinander ordnen sie alle bekannten Elemente nach steigender Atommasse — und entdecken die <strong>«magische Zahl 8»</strong>.</p>
         </div>
         <div class="timeline-event">
           <div class="timeline-year">heute</div>
           <div class="timeline-name">Modernes PSE</div>
-          <p>Geordnet nicht mehr nach Atommasse, sondern nach <strong>Protonenzahl</strong> (= Ordnungszahl). 118 bekannte Elemente, davon viele künstlich.</p>
+          <p>Geordnet nicht mehr nach Atommasse, sondern nach <strong>Protonenzahl</strong> (= Ordnungszahl). 118 bekannte Elemente.</p>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="discovery"><div class="discovery-label">Vertiefung: Triaden &amp; magische Zahl 8</div>
+
+    <p><strong>Döbereiners Triaden (1829).</strong> Döbereiner fiel auf, dass es Dreiergruppen («Triaden») chemisch ähnlicher Elemente gibt — und dass die <em>Atommasse</em> des mittleren Elements ungefähr dem Mittelwert der äusseren beiden entspricht.</p>
+
+    <table class="data-table" style="font-size:0.84rem; margin-top:8px;">
+      <thead>
+        <tr><th>Triade</th><th>Element</th><th>Atommasse (u)</th><th>Mittelwert von oben &amp; unten</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="3" style="background:var(--bg-alt); vertical-align:middle;"><strong>Halogene</strong></td><td>Chlor (Cl)</td><td>35,5</td><td>—</td></tr>
+        <tr><td>Brom (Br)</td><td><strong>79,9</strong></td><td>(35,5 + 126,9) / 2 = <strong>81,2</strong> ✓</td></tr>
+        <tr><td>Iod (I)</td><td>126,9</td><td>—</td></tr>
+        <tr><td rowspan="3" style="background:var(--bg-alt); vertical-align:middle;"><strong>Alkalimetalle</strong></td><td>Lithium (Li)</td><td>6,9</td><td>—</td></tr>
+        <tr><td>Natrium (Na)</td><td><strong>23,0</strong></td><td>(6,9 + 39,1) / 2 = <strong>23,0</strong> ✓</td></tr>
+        <tr><td>Kalium (K)</td><td>39,1</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.88rem; margin-top:10px;">Eine schöne Beobachtung — aber nur eine erste Ahnung von Ordnung. Triaden funktionierten nur für wenige Element-Gruppen, ein vollständiges System war noch nicht in Sicht.</p>
+
+    <p style="margin-top:18px;"><strong>Die «magische Zahl 8» (1869).</strong> Vierzig Jahre später wagten Meyer und Mendelejew einen radikaleren Schritt: Sie ordneten <em>alle</em> bekannten Elemente in einer einzigen Reihe nach steigender Atommasse — und beobachteten, dass <strong>nach jeweils acht Schritten</strong> wieder ein Element mit ähnlichen Eigenschaften wie das Ausgangselement auftauchte.</p>
+
+    <p style="font-size:0.88rem; margin-top:8px;">Konkret: Zählt man bei Lithium los und geht acht Plätze weiter, landet man bei Natrium — beides weiche, sehr reaktive Metalle. Acht weiter: Kalium, wieder dasselbe Verhaltensmuster. Geht man von Fluor acht Plätze weiter, kommt Chlor — beides giftige, reaktive Nichtmetalle.</p>
+
+    <p style="font-size:0.88rem; margin-top:8px; margin-bottom:0;">Diese <strong>periodische Wiederkehr ähnlicher Eigenschaften</strong> war das Schlüsselargument: Wenn man die Elementreihe nach jedem achten Element umbricht und untereinander schreibt, stehen chemisch ähnliche Elemente plötzlich in derselben Spalte. Das ist die Geburtsstunde des Periodensystems — und der Grund, warum es «Periodensystem» heisst.</p>
   </div>
 
   <div class="geniestreich">
@@ -747,7 +804,7 @@ section { animation: fadeUp 0.4s ease-out both; }
 
   <div class="glossar"><div class="glossar-label">Fachbegriff</div>
     <div class="glossar-term">Gruppe</div>
-    <p>Eine senkrechte <strong>Spalte</strong> im PSE. Elemente einer Gruppe haben ähnliche chemische Eigenschaften, weil sie die <strong>gleiche Anzahl Valenzelektronen</strong> besitzen (Details dazu in L10).</p>
+    <p>Eine senkrechte <strong>Spalte</strong> im PSE. Elemente einer Gruppe haben ähnliche chemische Eigenschaften, weil ihre äusserste Schale auf die gleiche Weise mit Elektronen besetzt ist. Was das genau bedeutet, lernen Sie in L10.</p>
   </div>
 
   <p>Man unterscheidet 18 Gruppen. Die <strong>8 Hauptgruppen</strong> (rote Beschriftung im PSE unten) tragen die Nummern I–VIII, dazwischen liegen die <strong>10 Nebengruppen</strong> (Perioden 4–7, sogenannte Übergangsmetalle). Eine zusätzliche Unterteilung trennt das PSE in <strong>Metalle</strong> (links und Mitte), <strong>Nichtmetalle</strong> (rechts oben) und die schmale Diagonale der <strong>Halbmetalle</strong> dazwischen.</p>
@@ -756,8 +813,8 @@ section { animation: fadeUp 0.4s ease-out both; }
   <p>Das PSE lässt sich auch nach den <strong>zuletzt besetzten Orbitalen</strong> einteilen. Diese Einteilung verbindet das PSE direkt mit dem Orbitalmodell aus Phase 2:</p>
 
   <ul>
-    <li><strong>s-Block</strong> (Gruppen 1 und 2): Die äussersten Elektronen besetzen ein s-Orbital. → Alkalimetalle und Erdalkalimetalle.</li>
-    <li><strong>p-Block</strong> (Gruppen 13–18): Die äussersten Elektronen besetzen p-Orbitale. → Hauptgruppen III–VIII.</li>
+    <li><strong>s-Block</strong> (Gruppen 1 und 2): Die äussersten Elektronen besetzen ein s-Orbital. → Alkalimetalle und Erdalkalimetalle. <em>Helium gehört trotz seiner Position rechts aussen ebenfalls zum s-Block (1s²)</em>.</li>
+    <li><strong>p-Block</strong> (Gruppen 13–18): Die äussersten Elektronen besetzen p-Orbitale. → Hauptgruppen III–VIII inklusive der <em>Edelgase Ne, Ar, Kr, Xe und Rn</em>.</li>
     <li><strong>d-Block</strong> (Gruppen 3–12): Die äussersten Elektronen besetzen d-Orbitale. → Übergangsmetalle (Nebengruppen).</li>
     <li><strong>f-Block</strong> (unten abgesetzt): f-Orbitale werden besetzt. → Lanthanoide und Actinoide.</li>
   </ul>
@@ -777,7 +834,11 @@ section { animation: fadeUp 0.4s ease-out both; }
       <button class="pse-toggle" data-mode="metall" onclick="setPseMode('metall')">Metall / Nichtmetall</button>
     </div>
 
-    <div class="pse-grid" id="pseGrid"><!-- wird via JS aufgebaut --></div>
+    <div class="pse-grid-wrap">
+      <div class="pse-axis-group">Gruppe →</div>
+      <div class="pse-axis-period">Periode ↓</div>
+      <div class="pse-grid" id="pseGrid"><!-- wird via JS aufgebaut --></div>
+    </div>
 
     <div class="pse-legend" id="pseLegend"><!-- wird via JS aktualisiert --></div>
 
@@ -806,24 +867,33 @@ section { animation: fadeUp 0.4s ease-out both; }
 
     <div class="question">
       <div class="q-text"><span class="q-num">2</span>Was haben Elemente in derselben Periode gemeinsam?</div>
-      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Sie haben gleich viele Valenzelektronen.</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Sie stehen in derselben Spalte.</div>
       <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Sie haben gleich viele besetzte Hauptschalen.</div>
       <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Sie haben ähnliche chemische Eigenschaften.</div>
-      <div class="feedback correct">Genau! Die Periodennummer = Anzahl besetzter Hauptschalen. Gleiche Valenzelektronen-Zahl haben dagegen Elemente in derselben Gruppe.</div>
-      <div class="feedback wrong">Aufgepasst: Periode = Zeile (Schalen-Anzahl), Gruppe = Spalte (Valenzelektronen-Zahl).</div>
+      <div class="feedback correct">Genau! Die Periodennummer entspricht der Anzahl besetzter Hauptschalen. Ähnliche chemische Eigenschaften haben dagegen Elemente in derselben <em>Gruppe</em> (Spalte).</div>
+      <div class="feedback wrong">Aufgepasst: Periode = Zeile (entspricht der Hauptschalen-Anzahl), Gruppe = Spalte (Elemente mit ähnlichen Eigenschaften).</div>
     </div>
 
     <div class="question">
-      <div class="q-text"><span class="q-num">3</span>Zu welchem Block gehört Schwefel (Z = 16, Konfiguration: 1s² 2s² 2p⁶ 3s² 3p⁴)?</div>
+      <div class="q-text"><span class="q-num">3</span>Zu welchem Block gehört <strong>Schwefel (S)</strong>? Tipp: Schauen Sie im interaktiven PSE oben nach.</div>
       <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>s-Block</div>
       <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>p-Block</div>
       <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>d-Block</div>
-      <div class="feedback correct">Richtig! Das zuletzt besetzte Orbital ist 3p — daher p-Block.</div>
-      <div class="feedback wrong">Schauen Sie sich die letzte Unterschale in der Konfiguration an: 3p⁴ → das verrät den Block.</div>
+      <div class="feedback correct">Richtig! Schwefel steht in der 16. Spalte (Hauptgruppe VI), also im p-Block.</div>
+      <div class="feedback wrong">Schwefel steht in Hauptgruppe VI (Spalte 16). Wechseln Sie im PSE oben in den «Blockstruktur»-Modus, um die Antwort visuell zu prüfen.</div>
     </div>
 
     <div class="question">
-      <div class="q-text"><span class="q-num">4</span>Warum war Mendelejews Vorhersage des «Eka-Silicium» so beeindruckend?</div>
+      <div class="q-text"><span class="q-num">4</span>Und zu welchem Block gehört <strong>Strontium (Sr)</strong>?</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>s-Block</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>p-Block</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>d-Block</div>
+      <div class="feedback correct">Richtig! Strontium steht in Hauptgruppe II (Spalte 2), das ist der s-Block — Strontium ist ein Erdalkalimetall.</div>
+      <div class="feedback wrong">Schauen Sie nochmals im PSE: Strontium steht in der 2. Spalte. Welche Spalten gehören zum s-Block?</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">5</span>Warum war Mendelejews Vorhersage des «Eka-Silicium» so beeindruckend?</div>
       <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Er hat das Element selbst entdeckt.</div>
       <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Aus einer leeren Stelle in der Tabelle konnte er die Eigenschaften eines noch unbekannten Elements korrekt vorhersagen.</div>
       <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Er hat die Atommasse mit einer neuen Methode bestimmt.</div>
@@ -864,8 +934,8 @@ section { animation: fadeUp 0.4s ease-out both; }
 const PSE_ELEMENTS = [
   // {Z, sym, name, period, group, block, type}
   // Periode 1
-  { z: 1,  sym: 'H',  name: 'Wasserstoff', period: 1, group: 1,  block: 's', type: 'nichtmetal' },
-  { z: 2,  sym: 'He', name: 'Helium',      period: 1, group: 18, block: 's', type: 'edelgas' },
+  { z: 1,  sym: 'H',  name: 'Wasserstoff', period: 1, group: 1,  block: 's', type: 'wasserstoff', noGroupClick: true },
+  { z: 2,  sym: 'He', name: 'Helium',      period: 1, group: 18, block: 's', type: 'edelgas',     noGroupClick: true },
   // Periode 2
   { z: 3,  sym: 'Li', name: 'Lithium',     period: 2, group: 1,  block: 's', type: 'metal' },
   { z: 4,  sym: 'Be', name: 'Beryllium',   period: 2, group: 2,  block: 's', type: 'metal' },
@@ -1008,30 +1078,8 @@ const HAUPTGRUPPE_DETAILS = {
     title: 'Alkalimetalle',
     nummer: 'I',
     elemente: ['Li', 'Na', 'K', 'Rb', 'Cs', 'Fr'],
-    image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220">
-        <rect width="400" height="220" fill="#fbeee7"/>
-        <g font-family="DM Sans, sans-serif" text-anchor="middle">
-          <circle cx="80" cy="110" r="35" fill="#c0c4ca" stroke="#8a3d22" stroke-width="2"/>
-          <text x="80" y="116" font-size="22" font-weight="700" fill="#1a1a1a">Na</text>
-          <text x="80" y="170" font-size="11" fill="#6b6560">Natrium in Paraffinöl</text>
-          <g transform="translate(220,90)">
-            <circle r="8" fill="#4a7ab5"/>
-            <circle cx="-25" cy="20" r="6" fill="#4a7ab5"/>
-            <circle cx="25" cy="20" r="6" fill="#4a7ab5"/>
-            <circle cx="-15" cy="45" r="7" fill="#4a7ab5"/>
-            <circle cx="15" cy="45" r="7" fill="#4a7ab5"/>
-            <text y="-15" font-size="10" fill="#2c4a6e">H₂O</text>
-          </g>
-          <path d="M 280 100 Q 320 80 340 110 Q 350 130 320 145 Q 290 145 270 125 Z" fill="#ff9a3c" opacity="0.85"/>
-          <text x="320" y="175" font-size="11" fill="#6b6560">heftige Reaktion</text>
-          <path d="M 130 100 L 200 100" stroke="#8a3d22" stroke-width="2" marker-end="url(#arr)"/>
-          <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a3d22"/></marker></defs>
-          <text x="165" y="93" font-size="11" fill="#8a3d22">+ Wasser</text>
-        </g>
-      </svg>
-    `),
-    imageAlt: 'Schema: Reaktion eines Alkalimetalls mit Wasser',
+    image: 'images/Alkalimetalle.png',
+    imageAlt: 'Alkalimetalle Lithium, Natrium, Kalium (in Paraffinöl), Rubidium und Caesium (in Glasampullen)',
     summary: 'Weiche, silbrig glänzende Metalle, die sich mit dem Messer schneiden lassen. Wegen ihrer hohen Reaktivität kommen sie in der Natur nur in Verbindungen vor und werden in Paraffinöl aufbewahrt. Mit Wasser reagieren sie heftig zu Hydroxiden (MOH) und Wasserstoff.',
     trend: 'Reaktivität nimmt von oben nach unten zu (Li → Cs immer heftiger).',
     table: {
@@ -1049,26 +1097,8 @@ const HAUPTGRUPPE_DETAILS = {
     title: 'Erdalkalimetalle',
     nummer: 'II',
     elemente: ['Be', 'Mg', 'Ca', 'Sr', 'Ba', 'Ra'],
-    image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220">
-        <rect width="400" height="220" fill="#fbeee7"/>
-        <g font-family="DM Sans, sans-serif" text-anchor="middle">
-          <rect x="60" y="80" width="80" height="100" rx="4" fill="#d8d8d8" stroke="#8a3d22" stroke-width="2"/>
-          <text x="100" y="135" font-size="22" font-weight="700">Mg</text>
-          <text x="100" y="200" font-size="11" fill="#6b6560">Magnesium-Band</text>
-          <g transform="translate(280,130)">
-            <path d="M 0 -40 Q -25 -10 -15 20 Q 0 40 15 20 Q 25 -10 0 -40 Z" fill="#fff" stroke="#fff"/>
-            <path d="M -8 -25 Q -18 -5 -10 15 Q 0 25 10 15 Q 18 -5 8 -25 Z" fill="#fff8c0"/>
-            <circle r="6" fill="#fff"/>
-          </g>
-          <text x="280" y="200" font-size="11" fill="#6b6560">grellweisse Flamme</text>
-          <path d="M 150 130 L 230 130" stroke="#8a3d22" stroke-width="2" marker-end="url(#arr2)"/>
-          <defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a3d22"/></marker></defs>
-          <text x="190" y="123" font-size="11" fill="#8a3d22">verbrennt</text>
-        </g>
-      </svg>
-    `),
-    imageAlt: 'Schema: Magnesium verbrennt mit grellweisser Flamme',
+    image: 'images/Erdalkalimetalle.png',
+    imageAlt: 'Erdalkalimetalle Beryllium, Magnesium, Calcium, Strontium und Barium',
     summary: 'Silbrig glänzende, etwas härtere Metalle als die Alkalimetalle. Calcium ist das häufigste Erdalkalimetall in der Erdkruste. Magnesium brennt mit greller weisser Flamme. Strontium und Barium sind reaktiver und werden unter Paraffinöl aufbewahrt.',
     trend: 'Reaktivität nimmt von oben nach unten zu, ist aber stets geringer als bei den Alkalimetallen derselben Periode.',
     table: {
@@ -1086,42 +1116,8 @@ const HAUPTGRUPPE_DETAILS = {
     title: 'Halogene',
     nummer: 'VII',
     elemente: ['F', 'Cl', 'Br', 'I', 'At'],
-    image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220">
-        <rect width="400" height="220" fill="#fbeee7"/>
-        <g font-family="DM Sans, sans-serif" text-anchor="middle">
-          <!-- vier Reagenzgläser für F2, Cl2, Br2, I2 -->
-          <g transform="translate(70,40)">
-            <rect x="-18" y="0" width="36" height="120" rx="4" fill="#fffbe0" stroke="#666" stroke-width="1.5"/>
-            <rect x="-18" y="60" width="36" height="60" fill="#fff5b3"/>
-            <text y="150" font-size="11" font-weight="700">F₂</text>
-            <text y="165" font-size="9" fill="#6b6560">gelblich</text>
-          </g>
-          <g transform="translate(160,40)">
-            <rect x="-18" y="0" width="36" height="120" rx="4" fill="#fffbe0" stroke="#666" stroke-width="1.5"/>
-            <rect x="-18" y="40" width="36" height="80" fill="#d8e98c"/>
-            <text y="150" font-size="11" font-weight="700">Cl₂</text>
-            <text y="165" font-size="9" fill="#6b6560">gelb-grün</text>
-          </g>
-          <g transform="translate(250,40)">
-            <rect x="-18" y="0" width="36" height="120" rx="4" fill="#fffbe0" stroke="#666" stroke-width="1.5"/>
-            <rect x="-18" y="65" width="36" height="55" fill="#a0421c"/>
-            <rect x="-18" y="40" width="36" height="25" fill="#c4622f" opacity="0.6"/>
-            <text y="150" font-size="11" font-weight="700">Br₂</text>
-            <text y="165" font-size="9" fill="#6b6560">rot-braun</text>
-          </g>
-          <g transform="translate(340,40)">
-            <rect x="-18" y="0" width="36" height="120" rx="4" fill="#fffbe0" stroke="#666" stroke-width="1.5"/>
-            <rect x="-18" y="80" width="36" height="40" fill="#3a3050"/>
-            <rect x="-18" y="50" width="36" height="30" fill="#7a5fa3" opacity="0.5"/>
-            <text y="150" font-size="11" font-weight="700">I₂</text>
-            <text y="165" font-size="9" fill="#6b6560">violett</text>
-          </g>
-          <text x="200" y="200" font-size="10" fill="#6b6560">Halogene zeigen ein farbiges Spektrum</text>
-        </g>
-      </svg>
-    `),
-    imageAlt: 'Schema: Halogene mit ihren typischen Farben',
+    image: 'images/Halogene.png',
+    imageAlt: 'Halogene Fluor (gelblich), Chlor (gelbgrün), Brom (rotbraun) und Iod (violett)',
     summary: 'Sehr reaktive, giftige Nichtmetalle. Fluor und Chlor sind Gase, Brom flüssig, Iod fest. Wegen ihrer hohen Reaktivität kommen sie in der Natur nur in Verbindungen vor (z.B. NaCl im Kochsalz). Iod sublimiert beim Erwärmen zu violettem Dampf.',
     trend: 'Reaktivität nimmt von oben nach unten ab (umgekehrt zu den Alkalimetallen!).',
     table: {
@@ -1138,37 +1134,8 @@ const HAUPTGRUPPE_DETAILS = {
     title: 'Edelgase',
     nummer: 'VIII',
     elemente: ['He', 'Ne', 'Ar', 'Kr', 'Xe', 'Rn'],
-    image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220">
-        <rect width="400" height="220" fill="#fbeee7"/>
-        <g font-family="DM Sans, sans-serif" text-anchor="middle">
-          <!-- Leuchtröhren in verschiedenen Farben -->
-          <g transform="translate(70,110)">
-            <rect x="-15" y="-50" width="30" height="100" rx="15" fill="#ff5040" opacity="0.85"/>
-            <text y="70" font-size="11" font-weight="700">Ne</text>
-            <text y="85" font-size="9" fill="#6b6560">orange-rot</text>
-          </g>
-          <g transform="translate(150,110)">
-            <rect x="-15" y="-50" width="30" height="100" rx="15" fill="#ff7a3c" opacity="0.85"/>
-            <text y="70" font-size="11" font-weight="700">He</text>
-            <text y="85" font-size="9" fill="#6b6560">orange-weiss</text>
-          </g>
-          <g transform="translate(230,110)">
-            <rect x="-15" y="-50" width="30" height="100" rx="15" fill="#7a9ce0" opacity="0.85"/>
-            <text y="70" font-size="11" font-weight="700">Ar</text>
-            <text y="85" font-size="9" fill="#6b6560">violett</text>
-          </g>
-          <g transform="translate(310,110)">
-            <rect x="-15" y="-50" width="30" height="100" rx="15" fill="#a0e8d0" opacity="0.85"/>
-            <text y="70" font-size="11" font-weight="700">Kr</text>
-            <text y="85" font-size="9" fill="#6b6560">grünlich</text>
-          </g>
-          <text x="200" y="30" font-size="11" fill="#6b6560">Edelgase in Leuchtröhren</text>
-          <text x="200" y="195" font-size="10" fill="#8a3d22" font-style="italic">«Edel» = reaktionsträge</text>
-        </g>
-      </svg>
-    `),
-    imageAlt: 'Schema: Edelgase in Leuchtröhren mit charakteristischen Farben',
+    image: 'images/Edelgase.png',
+    imageAlt: 'Edelgase Helium, Neon, Argon, Krypton, Xenon in Gasentladungsröhren mit charakteristischen Farben',
     summary: 'Farb- und geruchlose Gase, die fast keine chemischen Bindungen eingehen. Edelgase bestehen aus einzelnen, ungebundenen Atomen. Verwendung als Schutzgas (Argon beim Schweissen), in Glühlampen (Krypton, Xenon) und für farbiges Licht in Leuchtröhren (Neon).',
     trend: 'Reaktionsträgheit ist die Folge der vollständig besetzten äusseren Schale (1s² bzw. s²p⁶) — diese «Edelgaskonfiguration» ist energetisch besonders günstig (Details in L10).',
     table: {
@@ -1277,16 +1244,18 @@ function buildPse() {
 function makeCell(el, isFBlock = false) {
   const cell = document.createElement('div');
   cell.className = `pse-cell type-${el.type}`;
-  if (el.type === 'metal')      cell.classList.add('is-metal');
-  if (el.type === 'halbmetal')  cell.classList.add('is-halbmetal');
-  if (el.type === 'nichtmetal') cell.classList.add('is-nichtmetal');
-  if (el.type === 'edelgas')    cell.classList.add('is-edelgas');
+  if (el.type === 'metal')        cell.classList.add('is-metal');
+  if (el.type === 'halbmetal')    cell.classList.add('is-halbmetal');
+  if (el.type === 'nichtmetal')   cell.classList.add('is-nichtmetal');
+  if (el.type === 'edelgas')      cell.classList.add('is-edelgas');
+  if (el.type === 'wasserstoff')  cell.classList.add('is-wasserstoff');
   cell.dataset.group = el.group ?? '';
   cell.dataset.block = el.block;
   cell.dataset.z = el.z;
 
   // Klickbar nur für Hauptgruppen-Elemente in den klickbaren Hauptgruppen
-  if (!isFBlock && el.group && HAUPTGRUPPEN_KLICKBAR.includes(el.group)) {
+  // (Wasserstoff und Helium sind ausgeschlossen via noGroupClick)
+  if (!isFBlock && !el.noGroupClick && el.group && HAUPTGRUPPEN_KLICKBAR.includes(el.group)) {
     cell.classList.add('clickable');
     cell.addEventListener('click', () => openDetailPanel(el.group));
   }
@@ -1301,13 +1270,10 @@ function makeCell(el, isFBlock = false) {
 }
 
 function applyModeToCell(cell) {
-  cell.classList.remove('block-s', 'block-p', 'block-d', 'block-f', 'block-noble');
+  cell.classList.remove('block-s', 'block-p', 'block-d', 'block-f');
   if (currentMode === 'block') {
     const block = cell.dataset.block;
-    // Edelgase bekommen eigene Block-Farbe für visuelle Klarheit
-    if (cell.classList.contains('is-edelgas')) {
-      cell.classList.add('block-noble');
-    } else if (block) {
+    if (block) {
       cell.classList.add('block-' + block);
     }
   }
@@ -1329,11 +1295,10 @@ function updateLegend() {
   legend.innerHTML = '';
   if (currentMode === 'block') {
     const items = [
-      ['s-Block', 'var(--block-s)'],
-      ['p-Block', 'var(--block-p)'],
+      ['s-Block (inkl. He)', 'var(--block-s)'],
+      ['p-Block (inkl. Edelgase Ne–Rn)', 'var(--block-p)'],
       ['d-Block', 'var(--block-d)'],
       ['f-Block', 'var(--block-f)'],
-      ['Edelgase (s²p⁶)', 'var(--block-noble)'],
     ];
     items.forEach(([label, color]) => {
       const li = document.createElement('div');
@@ -1347,6 +1312,7 @@ function updateLegend() {
       ['Halbmetalle', 'var(--halbmetal)'],
       ['Nichtmetalle', 'var(--nichtmetal)'],
       ['Edelgase', 'var(--edelgas)'],
+      ['Wasserstoff (Sonderstellung)', 'var(--wasserstoff)'],
     ];
     items.forEach(([label, color]) => {
       const li = document.createElement('div');
@@ -1397,9 +1363,11 @@ function openDetailPanel(group) {
     </div>
   `;
 
-  // Hauptgruppen-Spalte temporär highlighten
+  // Hauptgruppen-Spalte temporär highlighten (Wasserstoff bei Gruppe 1 ausschliessen)
   document.querySelectorAll('.pse-cell.highlight-group').forEach(c => c.classList.remove('highlight-group'));
-  document.querySelectorAll(`.pse-cell[data-group="${group}"]`).forEach(c => c.classList.add('highlight-group'));
+  document.querySelectorAll(`.pse-cell[data-group="${group}"]`).forEach(c => {
+    if (c.dataset.z !== '1') c.classList.add('highlight-group');
+  });
 
   panel.classList.add('show');
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
