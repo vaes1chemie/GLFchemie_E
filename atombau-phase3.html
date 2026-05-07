@@ -291,8 +291,22 @@ em { font-style: italic; color: var(--text-muted); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 18px 22px;
-  margin: 24px 0;
-  overflow-x: auto;
+  /* Ausbrechen aus dem 800px-Lesefluss: zentriert, max 1100px breit */
+  width: min(1100px, 100%);
+  margin: 24px auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Kein horizontales Scrollen mehr — Grid passt sich dank min-width-Anpassung an */
+  overflow: visible;
+}
+/* Sicherheitsnetz für sehr schmale Viewports */
+@media (max-width: 1180px) {
+  .pse-container {
+    width: 100%;
+    left: 0;
+    transform: none;
+  }
 }
 .pse-controls {
   display: flex;
@@ -360,7 +374,7 @@ em { font-style: italic; color: var(--text-muted); }
   grid-template-columns: 22px repeat(18, 1fr);
   gap: 2px;
   font-family: var(--sans);
-  min-width: 720px;
+  min-width: 0;
 }
 .pse-row-label, .pse-col-label {
   font-family: var(--mono);
@@ -636,14 +650,456 @@ em { font-style: italic; color: var(--text-muted); }
 }
 .bridge-box strong { color: var(--accent-strong); }
 
+/* ============================================================ */
+/*                L9 – TRENDS                                     */
+/* ============================================================ */
+
+/* Trend-Pfeil-Box: kompaktes Schema mit Pfeilen */
+.trend-arrow-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin: 18px 0 24px;
+}
+.trend-mini-svg {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px 18px;
+  margin: 18px 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.trend-mini-svg svg {
+  width: 280px;
+  height: 175px;
+  flex-shrink: 0;
+}
+.trend-mini-svg p {
+  flex: 1;
+  font-size: 0.88rem;
+  color: var(--text);
+  margin: 0;
+  min-width: 220px;
+}
+.trend-arrow-grid {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: 1fr 40px;
+  gap: 10px;
+  align-items: center;
+}
+.trend-pse-mini {
+  background: var(--accent-light);
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+.trend-arrow-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 110px;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.trend-arrow-vertical .arr {
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.trend-arrow-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding: 0 10px;
+}
+.trend-arrow-horizontal .arr {
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Heatmap-Werte in der PSE-Zelle (für L9) */
+.pse-cell .pse-value {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  display: none;
+  margin-top: 1px;
+  font-weight: 600;
+}
+.pse-mode-trend .pse-cell .pse-value { display: block; }
+.pse-mode-trend .pse-cell .pse-name { display: none; }
+/* Im Trend-Modus haben Zellen ihre eigene Heatmap-Färbung – per inline-style */
+
+/* Tabelle für IE/Atomradius-Werte */
+.value-table {
+  width: 100%;
+  font-size: 0.84rem;
+  border-collapse: collapse;
+  margin: 14px 0;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.value-table th, .value-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.value-table th { background: var(--bg-alt); font-weight: 600; font-size: 0.78rem; }
+.value-table td:first-child, .value-table th:first-child { text-align: left; font-weight: 600; }
+
+/* Ionenbildungs-Animation Container */
+.ion-anim {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin: 18px 0;
+}
+.ion-anim-title {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.ion-anim svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.ion-anim-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.ion-anim-btn {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ion-anim-btn:hover { border-color: var(--accent); color: var(--accent); }
+.ion-anim-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.ion-anim-explanation {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.86rem;
+  color: var(--accent-strong);
+  min-height: 50px;
+}
+
+/* Ionen-Schreibweise-Tabelle */
+.ionen-tabelle {
+  width: 100%;
+  font-size: 0.88rem;
+  border-collapse: collapse;
+  margin: 14px 0;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.ionen-tabelle th, .ionen-tabelle td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.ionen-tabelle th { background: var(--bg-alt); font-weight: 600; font-size: 0.8rem; }
+.ionen-tabelle .ion-formel { font-family: var(--mono); font-weight: 700; color: var(--accent-strong); font-size: 1rem; }
+
+/* ============================================================ */
+/*                L10: HYBRIDISIERUNG & LEWIS                   */
+/* ============================================================ */
+
+.hybrid-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin: 22px 0;
+}
+.hybrid-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.hybrid-before, .hybrid-after {
+  background: var(--bg-alt);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.hybrid-before svg, .hybrid-after svg {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+.hybrid-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.hybrid-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--accent-strong);
+  font-weight: 600;
+  padding: 0 8px;
+}
+.hybrid-arrow .big-arrow {
+  font-size: 2.2rem;
+  color: var(--accent);
+  line-height: 1;
+  margin: 4px 0;
+}
+@media (max-width: 700px) {
+  .hybrid-grid {
+    grid-template-columns: 1fr;
+  }
+  .hybrid-arrow .big-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+/* === LEWIS-SYMBOLE (Galerie und Builder) === */
+.lewis-overview {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  margin: 22px 0;
+}
+.lewis-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.lewis-cell {
+  background: var(--bg-alt);
+  border-radius: 8px;
+  padding: 12px 6px;
+  text-align: center;
+}
+.lewis-name {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .lewis-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Das eigentliche Lewis-Symbol-Canvas (3x3-Grid um Symbol) */
+.lewis-symbol-canvas {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 18px 50px 18px;
+  grid-template-rows: 18px 36px 18px;
+  width: 86px;
+  height: 72px;
+  align-items: center;
+  justify-items: center;
+}
+.lewis-symbol-canvas .lewis-center {
+  grid-column: 2;
+  grid-row: 2;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text);
+}
+.lewis-symbol-canvas .lewis-pos {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.lewis-symbol-canvas .lewis-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-strong);
+}
+
+/* Builder-Variante (grösser) */
+.lewis-canvas-big {
+  grid-template-columns: 28px 80px 28px;
+  grid-template-rows: 28px 56px 28px;
+  width: 136px;
+  height: 112px;
+}
+.lewis-canvas-big .lewis-center {
+  font-size: 2rem;
+}
+.lewis-canvas-big .lewis-dot {
+  width: 11px;
+  height: 11px;
+}
+
+/* Lewis-Builder */
+.lewis-builder {
+  background: white;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 22px 0;
+}
+.lewis-builder-header {
+  background: var(--accent-light);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.lewis-select {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+}
+.lewis-builder-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  padding: 22px 24px;
+  align-items: center;
+}
+.lewis-canvas-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.lewis-builder-counter {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.lewis-builder-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lewis-btn {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lewis-btn:hover { border-color: var(--accent); color: var(--accent); }
+.lewis-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.lewis-btn.primary:hover { background: var(--accent-strong); }
+.lewis-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.lewis-builder-hint {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  padding: 10px 14px;
+  border-radius: 6px;
+  line-height: 1.45;
+}
+@media (max-width: 700px) {
+  .lewis-builder-body {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    text-align: center;
+  }
+}
+
+/* Summary Phase 3 */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+.summary-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.summary-card h4 {
+  font-family: var(--sans);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--accent-strong);
+  margin: 0 0 6px;
+}
+.summary-card p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--text);
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .content { padding: 32px 18px 80px; }
   .task-links { grid-template-columns: 1fr; }
   .timeline-events { grid-template-columns: 1fr; }
+  .pse-container { padding: 14px 8px 18px; }
+  .pse-grid-wrap { padding-left: 28px; }
   .pse-grid { font-size: 0.55rem; }
   .pse-cell .pse-sym { font-size: 0.66rem; }
+  .pse-cell .pse-num { font-size: 0.42rem; }
+}
+@media (max-width: 600px) {
+  .pse-grid { font-size: 0.48rem; gap: 1px; }
+  .pse-cell .pse-sym { font-size: 0.58rem; }
+  .pse-cell .pse-num { display: none; }
 }
 @media print {
   .sidebar, .progress-bar, .quiz-section, .task-links, .pse-controls { display: none; }
@@ -919,8 +1375,645 @@ section { animation: fadeUp 0.4s ease-out both; }
 
 
 <!-- ============================================================ -->
-<!-- (L9 und L10 folgen — werden iterativ ergänzt)                 -->
+<!--                        LEKTION 9                              -->
 <!-- ============================================================ -->
+<section id="L9">
+  <div class="lesson-header">
+    <div class="lesson-number">Lektion 09</div>
+    <h2>Trends im Periodensystem</h2>
+  </div>
+
+  <div class="lernziele"><h3>Lernziele</h3><ul>
+    <li>Sie können den Atomradius definieren und seine Trends innerhalb von Perioden und Gruppen beschreiben und erklären.</li>
+    <li>Sie können den Begriff Ionisierungsenergie definieren und die Trends im PSE erklären.</li>
+    <li>Sie können erklären, wie aus einem Atom durch Elektronen-Abgabe oder -Aufnahme ein Kation oder Anion entsteht.</li>
+    <li>Sie kennen den Begriff Elektronegativität als Mass für die «Anziehungskraft» eines Atoms auf Bindungselektronen.</li>
+    <li>Sie können die Trends Atomradius, Ionisierungsenergie und Elektronegativität in der Trend-Heatmap ablesen und interpretieren.</li>
+  </ul></div>
+
+  <h3>9.1 Warum gibt es Trends?</h3>
+  <p>In L8 haben Sie gelernt, wie das Periodensystem aufgebaut ist. Doch das PSE ist mehr als ein Ordnungsschema: Innerhalb der Spalten und Zeilen verändern sich Eigenschaften wie <strong>Atomgrösse</strong> und die <strong>Festigkeit, mit der Elektronen ans Atom gebunden sind</strong>, in einer klar erkennbaren, vorhersagbaren Weise.</p>
+  <p>In dieser Lektion schauen wir uns drei wichtige Trends an: <strong>Atomradius</strong>, <strong>Ionisierungsenergie</strong> und (kurz) <strong>Elektronegativität</strong>. Alle drei lassen sich mit zwei einfachen Grundideen erklären: Wie viele <em>Schalen</em> hat ein Atom — und wie stark zieht der <em>Kern</em> an den äusseren Elektronen?</p>
+
+  <h3>9.2 Der Atomradius</h3>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Atomradius</div>
+    <p>Da ein Atom keine scharfe Grenze hat (die Elektronenwolke wird nach aussen nur immer dünner), definiert man den Atomradius als <strong>halben Abstand zweier Atomkerne</strong> in einem Stoff aus identischen Atomen, die sich gerade berühren. Üblich ist die Angabe in Pikometer (1 pm = 10⁻¹² m).</p>
+  </div>
+
+  <p>Wenn wir uns die Atomradien aller Elemente anschauen, fallen zwei klare Trends auf:</p>
+
+  <div class="trend-mini-svg">
+    <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Mini-PSE-Schema (vereinfacht: 7 x 5 Raster für Hauptgruppen) -->
+      <g transform="translate(60,50)">
+        <!-- Hintergrundraster -->
+        <rect x="0"   y="0"  width="20" height="20" fill="#f0e8e0" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="0"  width="20" height="20" fill="#fbeee7" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="0"   y="20" width="20" height="20" fill="#e0d4c0" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="20" width="20" height="20" fill="#fce9dc" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="0"   y="40" width="20" height="20" fill="#c8b89a" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="40" width="20" height="20" fill="#fde6d0" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="0"   y="60" width="20" height="20" fill="#a89870" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="60" width="20" height="20" fill="#ffdcbe" stroke="#d4a574" stroke-width="0.5"/>
+        <!-- weitere Spalten andeuten (ohne Fokus) -->
+        <rect x="20"  y="0"  width="135" height="80" fill="#faf9f7" stroke="#e5e2dd" stroke-width="0.5" opacity="0.5"/>
+
+        <!-- Pfeil rechts: kleiner -->
+        <path d="M 5 -10 L 175 -10" stroke="#b85535" stroke-width="2" marker-end="url(#aR)" fill="none"/>
+        <text x="90" y="-15" font-family="DM Sans" font-size="9" fill="#8a3d22" text-anchor="middle" font-weight="600">Atomradius nimmt ab →</text>
+
+        <!-- Pfeil unten: grösser -->
+        <path d="M -10 5 L -10 80" stroke="#b85535" stroke-width="2" marker-end="url(#aR)" fill="none"/>
+        <text x="-15" y="50" font-family="DM Sans" font-size="9" fill="#8a3d22" text-anchor="middle" font-weight="600" transform="rotate(-90,-15,50)">Atomradius nimmt zu ↓</text>
+
+        <!-- Atom-Schemata zur Veranschaulichung -->
+        <circle cx="10" cy="10" r="4" fill="none" stroke="#3d6a9e" stroke-width="0.7"/>
+        <circle cx="10" cy="10" r="2" fill="#b85535"/>
+
+        <circle cx="165" cy="10" r="2.5" fill="none" stroke="#3d6a9e" stroke-width="0.7"/>
+        <circle cx="165" cy="10" r="1.5" fill="#b85535"/>
+
+        <circle cx="10" cy="70" r="9" fill="none" stroke="#3d6a9e" stroke-width="0.7"/>
+        <circle cx="10" cy="70" r="6" fill="none" stroke="#3d6a9e" stroke-width="0.7"/>
+        <circle cx="10" cy="70" r="2" fill="#b85535"/>
+      </g>
+      <defs>
+        <marker id="aR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="#b85535"/>
+        </marker>
+      </defs>
+    </svg>
+    <p>Innerhalb einer <strong>Periode</strong> (von links nach rechts): Atomradius nimmt ab.<br>
+    Innerhalb einer <strong>Gruppe</strong> (von oben nach unten): Atomradius nimmt zu.</p>
+  </div>
+
+  <p><strong>Erklärung — innerhalb einer Periode:</strong> Beim Wandern von links nach rechts (z.B. von Li zu Ne) nimmt die Protonenzahl im Kern zu. Die zusätzlichen Elektronen werden aber alle in <em>derselben</em> Hauptschale untergebracht. Der stärker werdende Kern zieht diese Elektronen also fester zu sich heran — das Atom <strong>schrumpft</strong>.</p>
+  <p><strong>Erklärung — innerhalb einer Gruppe:</strong> Beim Wandern von oben nach unten (z.B. von Li zu Cs) kommt jeweils eine ganze neue Hauptschale dazu. Die äusseren Elektronen sitzen also weiter weg vom Kern und werden zusätzlich von den darunterliegenden Schalen «abgeschirmt» — das Atom <strong>wächst</strong>.</p>
+
+  <table class="value-table">
+    <thead>
+      <tr><th>Element</th><th>Li</th><th>Be</th><th>B</th><th>C</th><th>N</th><th>O</th><th>F</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Atomradius (pm)</td><td>152</td><td>112</td><td>88</td><td>77</td><td>70</td><td>66</td><td>64</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-top:-8px;">Innerhalb der 2. Periode schrumpft der Atomradius von Lithium zu Fluor um mehr als die Hälfte — der wachsende Kern zieht die L-Schalen-Elektronen immer fester an.</p>
+
+  <h3>9.3 Die Ionisierungsenergie</h3>
+
+  <p>Stellen Sie sich vor, Sie wollen einem Atom ein Elektron «entreissen». Da der positiv geladene Kern und das negativ geladene Elektron einander anziehen, müssen Sie dafür <strong>Energie aufwenden</strong>. Genau diese Energie heisst Ionisierungsenergie.</p>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Ionisierungsenergie (IE)</div>
+    <p>Die Energie, die nötig ist, um einem freien, gasförmigen Atom <strong>ein Elektron vollständig zu entfernen</strong>. Üblicherweise wird die Energie pro Mol Atome angegeben, in <strong>kJ/mol</strong>.</p>
+    <p style="margin-top:6px; margin-bottom:0;">Symbolische Schreibweise:<br>
+    <span style="font-family:var(--mono); font-size:0.95rem;">Na (g) + Energie ⟶ Na⁺ (g) + e⁻</span></p>
+  </div>
+
+  <p>Da das entfernte Elektron negativ geladen ist und im Atom zurückbleibt: ein einfach <strong>positiv geladenes</strong> Teilchen (das Atom hat ein Elektron weniger als Protonen). Solche geladenen Teilchen heissen <em>Ionen</em> — dazu gleich mehr.</p>
+
+  <p>Die Ionisierungsenergie folgt zwei klaren Trends — entgegengesetzt zum Atomradius:</p>
+
+  <div class="trend-mini-svg">
+    <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(60,50)">
+        <!-- Hintergrundraster mit IE-Heatmap (umgekehrt zum Atomradius) -->
+        <rect x="0"   y="0"  width="20" height="20" fill="#fde6d0" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="0"  width="20" height="20" fill="#a85a30" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="0"   y="20" width="20" height="20" fill="#fce0c8" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="20" width="20" height="20" fill="#c47042" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="0"   y="40" width="20" height="20" fill="#fadcc0" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="40" width="20" height="20" fill="#d68252" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="0"   y="60" width="20" height="20" fill="#fad8b8" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="155" y="60" width="20" height="20" fill="#e0916a" stroke="#d4a574" stroke-width="0.5"/>
+        <rect x="20"  y="0"  width="135" height="80" fill="#faf9f7" stroke="#e5e2dd" stroke-width="0.5" opacity="0.5"/>
+
+        <path d="M 5 -10 L 175 -10" stroke="#b85535" stroke-width="2" marker-end="url(#aIE)" fill="none"/>
+        <text x="90" y="-15" font-family="DM Sans" font-size="9" fill="#8a3d22" text-anchor="middle" font-weight="600">IE nimmt zu →</text>
+
+        <path d="M -10 80 L -10 5" stroke="#b85535" stroke-width="2" marker-end="url(#aIE)" fill="none"/>
+        <text x="-15" y="50" font-family="DM Sans" font-size="9" fill="#8a3d22" text-anchor="middle" font-weight="600" transform="rotate(-90,-15,50)">IE nimmt ab ↓</text>
+      </g>
+      <defs>
+        <marker id="aIE" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="#b85535"/>
+        </marker>
+      </defs>
+    </svg>
+    <p>Innerhalb einer <strong>Periode</strong> (von links nach rechts): IE nimmt zu.<br>
+    Innerhalb einer <strong>Gruppe</strong> (von oben nach unten): IE nimmt ab.</p>
+  </div>
+
+  <p><strong>Erklärung:</strong> Je näher ein Elektron am Kern sitzt (kleiner Atomradius!), desto fester wird es gehalten und desto mehr Energie braucht es, um es loszureissen. Daher: kleines Atom → hohe IE, grosses Atom → tiefe IE. Atomradius und IE sind also «zwei Seiten derselben Medaille».</p>
+
+  <table class="value-table">
+    <thead>
+      <tr><th>Element</th><th>Li</th><th>Be</th><th>B</th><th>C</th><th>N</th><th>O</th><th>F</th><th>Ne</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>IE (kJ/mol)</td><td>520</td><td>899</td><td>801</td><td>1086</td><td>1402</td><td>1314</td><td>1681</td><td>2081</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-top:-8px;">In der 2. Periode steigt die IE deutlich an. Die kleinen «Knicks» bei Bor und Sauerstoff haben mit Details der Orbitalfüllung zu tun und sind hier nicht weiter wichtig.</p>
+
+  <h3>9.4 Aus Atomen werden Ionen</h3>
+
+  <p>Sobald ein Atom ein Elektron <strong>verliert</strong> oder ein Elektron <strong>aufnimmt</strong>, wird daraus ein elektrisch geladenes Teilchen — ein <strong>Ion</strong>.</p>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Kation</div>
+    <p>Ein <strong>positiv</strong> geladenes Ion. Es entsteht, wenn ein Atom ein oder mehrere Elektronen <em>abgibt</em>. Beispiel: Na ⟶ Na⁺ + e⁻</p>
+  </div>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Anion</div>
+    <p>Ein <strong>negativ</strong> geladenes Ion. Es entsteht, wenn ein Atom ein oder mehrere Elektronen <em>aufnimmt</em>. Beispiel: Cl + e⁻ ⟶ Cl⁻</p>
+  </div>
+
+  <div class="ion-anim">
+    <div class="ion-anim-title">Animation: Wie wird aus einem Atom ein Ion?</div>
+    <svg viewBox="0 0 600 240" id="ionAnimSvg" xmlns="http://www.w3.org/2000/svg">
+      <!-- Atom links (initial) -->
+      <g id="ionAtom">
+        <!-- Schalen -->
+        <circle cx="150" cy="120" r="30" fill="none" stroke="#c8c4be" stroke-width="1" stroke-dasharray="3 2"/>
+        <circle cx="150" cy="120" r="55" fill="none" stroke="#c8c4be" stroke-width="1" stroke-dasharray="3 2"/>
+        <circle cx="150" cy="120" r="85" fill="none" stroke="#c8c4be" stroke-width="1" stroke-dasharray="3 2"/>
+        <!-- Kern -->
+        <circle cx="150" cy="120" r="14" fill="#b85535"/>
+        <text x="150" y="125" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="700" fill="white">Na</text>
+        <!-- K-Schale: 2 e -->
+        <circle cx="180" cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="120" cy="120" r="4" fill="#3d6a9e"/>
+        <!-- L-Schale: 8 e -->
+        <circle cx="205" cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="95"  cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="150" cy="65"  r="4" fill="#3d6a9e"/>
+        <circle cx="150" cy="175" r="4" fill="#3d6a9e"/>
+        <circle cx="189" cy="81"  r="4" fill="#3d6a9e"/>
+        <circle cx="111" cy="159" r="4" fill="#3d6a9e"/>
+        <circle cx="189" cy="159" r="4" fill="#3d6a9e"/>
+        <circle cx="111" cy="81"  r="4" fill="#3d6a9e"/>
+        <!-- M-Schale: 1 e (das wird abgegeben) -->
+        <circle id="valenceElectron" cx="235" cy="120" r="5" fill="#c05050" stroke="#fff" stroke-width="1"/>
+      </g>
+
+      <!-- Pfeil -->
+      <g id="ionArrow" opacity="0">
+        <path d="M 280 120 L 360 120" stroke="#b85535" stroke-width="2" marker-end="url(#arrIon)"/>
+        <text x="320" y="108" text-anchor="middle" font-family="DM Sans" font-size="12" fill="#8a3d22" font-weight="600">+ Energie</text>
+      </g>
+      <defs>
+        <marker id="arrIon" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b85535"/>
+        </marker>
+      </defs>
+
+      <!-- Resultat: Kation + freies Elektron -->
+      <g id="ionResult" opacity="0">
+        <!-- Kation Na+ -->
+        <circle cx="445" cy="120" r="55" fill="none" stroke="#c8c4be" stroke-width="1" stroke-dasharray="3 2"/>
+        <circle cx="445" cy="120" r="30" fill="none" stroke="#c8c4be" stroke-width="1" stroke-dasharray="3 2"/>
+        <circle cx="445" cy="120" r="14" fill="#b85535"/>
+        <text x="445" y="125" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="700" fill="white">Na</text>
+        <text x="475" y="85" font-family="DM Sans" font-size="22" font-weight="700" fill="#8a3d22">+</text>
+        <!-- 2 e in K, 8 e in L -->
+        <circle cx="475" cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="415" cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="500" cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="390" cy="120" r="4" fill="#3d6a9e"/>
+        <circle cx="445" cy="65"  r="4" fill="#3d6a9e"/>
+        <circle cx="445" cy="175" r="4" fill="#3d6a9e"/>
+        <circle cx="484" cy="81"  r="4" fill="#3d6a9e"/>
+        <circle cx="406" cy="159" r="4" fill="#3d6a9e"/>
+        <circle cx="484" cy="159" r="4" fill="#3d6a9e"/>
+        <circle cx="406" cy="81"  r="4" fill="#3d6a9e"/>
+        <!-- freies Elektron -->
+        <circle cx="565" cy="120" r="5" fill="#c05050" stroke="#fff" stroke-width="1"/>
+        <text x="565" y="105" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#7a2020" font-weight="600">e⁻</text>
+      </g>
+    </svg>
+
+    <div class="ion-anim-controls">
+      <button class="ion-anim-btn active" onclick="setIonAnimStep(0)">Start: Na-Atom</button>
+      <button class="ion-anim-btn" onclick="setIonAnimStep(1)">Energie zuführen</button>
+      <button class="ion-anim-btn" onclick="setIonAnimStep(2)">Resultat: Na⁺ + e⁻</button>
+    </div>
+    <div class="ion-anim-explanation" id="ionAnimExplain">
+      Ein Natrium-Atom hat 11 Protonen und 11 Elektronen — es ist elektrisch <strong>neutral</strong>. Das eine Elektron in der äussersten Schale (rot markiert) ist relativ locker gebunden.
+    </div>
+  </div>
+
+  <h3>9.5 Ionen-Schreibweise und Hauptgruppen</h3>
+
+  <p>Welche Ionen ein Atom typischerweise bildet, hängt direkt von seiner Position im PSE ab. Atome aus den Hauptgruppen I und II geben gerne Elektronen ab und werden zu Kationen. Atome aus den Hauptgruppen VI und VII nehmen gerne Elektronen auf und werden zu Anionen. Edelgase bilden in der Regel gar keine Ionen — sie sind ja schon «zufrieden».</p>
+
+  <table class="ionen-tabelle">
+    <thead>
+      <tr><th>Hauptgruppe</th><th>Beispiel-Atom</th><th>Wird zu …</th><th>Ion</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>I</td><td>Natrium (Na)</td><td>gibt 1 Elektron ab</td><td class="ion-formel">Na⁺</td></tr>
+      <tr><td>II</td><td>Magnesium (Mg)</td><td>gibt 2 Elektronen ab</td><td class="ion-formel">Mg²⁺</td></tr>
+      <tr><td>VI</td><td>Sauerstoff (O)</td><td>nimmt 2 Elektronen auf</td><td class="ion-formel">O²⁻</td></tr>
+      <tr><td>VII</td><td>Chlor (Cl)</td><td>nimmt 1 Elektron auf</td><td class="ion-formel">Cl⁻</td></tr>
+    </tbody>
+  </table>
+
+  <div class="merksatz"><div class="merksatz-label">Merksatz</div>
+    <p>Atome bilden Ionen, deren Ladung der typischen «Tendenz» ihrer Hauptgruppe entspricht: <strong>links abgeben (positiv)</strong>, <strong>rechts aufnehmen (negativ)</strong>. <em>Warum</em> sie das tun, beantworten wir in L10 mit der Edelgasregel — und die Bindungen, die daraus entstehen, sind das Thema von Phase 4.</p>
+  </div>
+
+  <h3>9.6 Die Elektronegativität — ein kurzer Ausblick</h3>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Elektronegativität (EN)</div>
+    <p>Ein Mass dafür, wie stark ein Atom in einer chemischen Bindung die <strong>gemeinsamen Bindungselektronen zu sich heranzieht</strong>. Die heute übliche Skala stammt von Linus Pauling und reicht von rund 0,7 (Cs) bis 4,0 (F).</p>
+  </div>
+
+  <p>Die Elektronegativität folgt im Wesentlichen denselben Trends wie die Ionisierungsenergie: Sie nimmt innerhalb einer Periode <strong>nach rechts hin zu</strong> und innerhalb einer Gruppe <strong>nach unten hin ab</strong>. Fluor ist mit EN = 4,0 das «elektronegativste» Element überhaupt.</p>
+
+  <p>Wir streifen die EN hier nur kurz — sie wird in <strong>Phase 4</strong> bei den verschiedenen Bindungstypen ausführlich gebraucht. Dort werden wir sehen: Je grösser der EN-Unterschied zwischen zwei Atomen in einer Bindung, desto «ionischer» ist die Bindung.</p>
+
+  <h3>9.7 Trends im interaktiven PSE</h3>
+  <p>Im PSE unten können Sie die drei Trends als Heatmap einblenden. Dunklere Farbe steht jeweils für höhere Werte. Beobachten Sie, wie sich die Färbung von Periode zu Periode und von Gruppe zu Gruppe verändert.</p>
+
+  <!-- ============== ZWEITES PSE FÜR L9 (TRENDS) ============== -->
+  <div class="pse-container" id="pseTrendContainer">
+    <div class="pse-controls">
+      <span class="pse-controls-label">Trend:</span>
+      <button class="pse-toggle active" data-trend="none" onclick="setTrend('none')">aus</button>
+      <button class="pse-toggle" data-trend="radius" onclick="setTrend('radius')">Atomradius</button>
+      <button class="pse-toggle" data-trend="ie" onclick="setTrend('ie')">Ionisierungsenergie</button>
+      <button class="pse-toggle" data-trend="en" onclick="setTrend('en')">Elektronegativität</button>
+    </div>
+
+    <div class="pse-grid-wrap">
+      <div class="pse-axis-group">Gruppe →</div>
+      <div class="pse-axis-period">Periode ↓</div>
+      <div class="pse-grid" id="pseTrendGrid"><!-- via JS --></div>
+    </div>
+
+    <div class="pse-legend" id="pseTrendLegend"></div>
+  </div>
+
+  <h3>9.8 Quiz: Verstehen Sie die Trends?</h3>
+  <div class="quiz-section">
+    <div class="quiz-header"><div class="quiz-icon">?</div><div class="quiz-title">Kurzcheck: Lektion 9</div></div>
+    <div class="quiz-sub">Testen Sie Ihr Verständnis – klicken Sie auf die richtige Antwort.</div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">1</span>Welches Atom ist grösser: Natrium (Na) oder Caesium (Cs)?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Natrium, weil es weniger Protonen hat.</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Caesium, weil es mehr Schalen besetzt.</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Beide gleich gross — sie stehen ja in derselben Gruppe.</div>
+      <div class="feedback correct">Genau! Innerhalb einer Gruppe wächst der Atomradius nach unten, weil mit jeder neuen Periode eine ganze Schale dazukommt.</div>
+      <div class="feedback wrong">Schauen Sie nach: Cs steht in derselben Gruppe wie Na, aber drei Perioden weiter unten — also mit drei zusätzlichen Schalen.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">2</span>Bei welchem der folgenden Atome ist die Ionisierungsenergie am höchsten?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Lithium (Li)</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Natrium (Na)</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Fluor (F)</div>
+      <div class="feedback correct">Richtig! Fluor ist klein und sein Kern zieht die Aussenelektronen sehr stark an — das macht es schwer, eines davon zu entfernen.</div>
+      <div class="feedback wrong">Tipp: Wo im PSE ist die IE am höchsten? Rechts oben! Schauen Sie sich die Positionen der drei Elemente an.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">3</span>Wie schreibt man das Ion korrekt, das aus einem Magnesium-Atom durch Abgabe von zwei Elektronen entsteht?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Mg²⁻</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Mg²⁺</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Mg⁻²</div>
+      <div class="feedback correct">Richtig! Wenn ein Atom Elektronen <em>abgibt</em>, hat es danach mehr Protonen als Elektronen — es ist also positiv geladen. Die Hochzahl steht <em>nach</em> dem Symbol, mit Anzahl vor dem Pluszeichen.</div>
+      <div class="feedback wrong">Aufgepasst: Elektronen <em>abgeben</em> heisst <em>positiv</em> werden. Und die Anzahl steht vor dem Vorzeichen.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">4</span>Welche Aussage zur Elektronegativität ist richtig?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Sie nimmt innerhalb einer Periode nach rechts hin ab.</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Fluor hat den höchsten EN-Wert aller Elemente.</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Edelgase haben die höchste Elektronegativität.</div>
+      <div class="feedback correct">Genau! Fluor (EN = 4,0) ist das elektronegativste Element. Im PSE liegt es rechts oben — dort, wo Atome am stärksten an Bindungselektronen «ziehen».</div>
+      <div class="feedback wrong">Tipp: Die EN folgt den gleichen Trends wie die IE — nach rechts oben hin steigt sie.</div>
+    </div>
+  </div>
+
+  <h4>Aufgaben zu Lektion 9</h4>
+  <div class="task-links" style="grid-template-columns: 1fr;">
+    <div class="task-card onenote" style="cursor:pointer;" onclick="this.querySelector('.task-hint').classList.toggle('show')">
+      <div class="task-card-icon">&#128221;</div>
+      <div class="task-card-title">Aufgaben 9.1 – 9.3</div>
+      <div class="task-card-desc">Klassennotizbuch · Klicken Sie für den Ablageort</div>
+      <div class="task-hint">Die Aufgaben finden Sie in Ihrem persönlichen Ordner im Klassennotizbuch <strong>GKG_Ch_2029_E</strong> unter <strong>4 Atombau – Aufgaben Atombau</strong></div>
+    </div>
+  </div>
+
+  <div class="bridge-box">
+    <strong>Brücke zu L10:</strong> Sie können jetzt erklären, wie sich Atome unterscheiden und warum manche bereitwillig Elektronen abgeben oder aufnehmen. Aber es bleibt eine Frage offen: <em>Warum</em> wollen Atome überhaupt zu Kationen oder Anionen werden? Die Antwort heisst <strong>Edelgasregel</strong> — und um sie zu verstehen, brauchen wir den Begriff der <strong>Valenzelektronen</strong> und das <strong>Lewis-Symbol</strong>. Das ist L10.
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!--                        LEKTION 10                             -->
+<!-- ============================================================ -->
+<section id="L10">
+  <div class="lesson-header">
+    <div class="lesson-number">Lektion 10</div>
+    <h2>Valenzelektronen und das Lewis-Symbol</h2>
+  </div>
+
+  <div class="lernziele"><h3>Lernziele</h3><ul>
+    <li>Sie können die Edelgasregel formulieren und erklären, warum Atome eine voll besetzte äusserste Schale «anstreben».</li>
+    <li>Sie können den Begriff Valenzelektronen erklären und ihre Anzahl aus der Position eines Elements im PSE ablesen.</li>
+    <li>Sie können das Konzept der sp³-Hybridisierung als Vereinfachung des Orbitalmodells beschreiben.</li>
+    <li>Sie können für Hauptgruppen-Elemente das Lewis-Symbol korrekt zeichnen.</li>
+  </ul></div>
+
+  <h3>10.1 Warum eine neue, einfachere Darstellung?</h3>
+  <p>In Phase 2 haben Sie das Orbitalmodell mit allen Details kennengelernt — s, p, d, f und die Pfeilschreibweise mit auf- und abwärts gerichteten Spins. Das ist sehr genau, aber für die Beschreibung von chemischen Bindungen <strong>zu detailliert</strong>. Wenn wir jedes Sauerstoff-Atom in einem Wassermolekül mit allen Orbitalen aufzeichnen würden, sähe das schnell unübersichtlich aus.</p>
+  <p>Wir brauchen ein Modell, das nur das Wesentliche zeigt: Wie viele Elektronen «interessieren» sich an chemischen Bindungen? Und wie könnten Atome sich zusammenfinden? Genau dafür gibt es das <strong>Lewis-Symbol</strong> — eine einfache, aber unglaublich nützliche Schreibweise.</p>
+
+  <h3>10.2 Die Edelgasregel</h3>
+  <p>In L8 haben Sie gesehen, dass die Edelgase (Hauptgruppe VIII) chemisch fast nichts tun — sie reagieren mit (fast) nichts. In L9 haben Sie gelernt, dass ihre Ionisierungsenergie besonders hoch ist und ihre Elektronegativität gering. Was ist das Geheimnis der Edelgase?</p>
+
+  <div class="merksatz"><div class="merksatz-label">Edelgasregel</div>
+    <p>Atome streben einen Zustand an, in dem ihre <strong>äusserste Schale vollständig mit Elektronen besetzt</strong> ist — bei den meisten Atomen entspricht das <strong>8 Elektronen</strong> (Oktett). Nur Wasserstoff und Helium sind «zufrieden» mit 2 Elektronen (Duett, also gefüllte K-Schale).</p>
+  </div>
+
+  <p>Das ist ein verblüffender empirischer Befund: Atome verhalten sich, als ob sie «wissen» wollten, wie ein Edelgas zu sein. Das ist die Erklärung für vieles, was Sie in L9 gesehen haben:</p>
+  <ul>
+    <li>Natrium gibt 1 Elektron ab → Na⁺ hat dieselbe Konfiguration wie Neon. ✓ Edelgas-Konfiguration erreicht.</li>
+    <li>Chlor nimmt 1 Elektron auf → Cl⁻ hat dieselbe Konfiguration wie Argon. ✓ Edelgas-Konfiguration erreicht.</li>
+    <li>Magnesium gibt 2 Elektronen ab → Mg²⁺ wie Neon. ✓</li>
+  </ul>
+  <p>Die Edelgasregel ist die <strong>treibende Kraft</strong> hinter fast aller Chemie der Hauptgruppen. Aber um sie sauber anzuwenden, müssen wir wissen: Wie viele Aussenelektronen hat ein Atom überhaupt?</p>
+
+  <h3>10.3 Valenzelektronen</h3>
+
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Valenzelektronen</div>
+    <p>Die Elektronen in der <strong>höchsten besetzten Hauptschale</strong> eines Atoms. Sie sind diejenigen Elektronen, die für chemische Bindungen «zur Verfügung» stehen.</p>
+  </div>
+
+  <p>Die gute Nachricht: Bei den Hauptgruppen-Elementen können Sie die Anzahl Valenzelektronen <strong>direkt aus der Hauptgruppen-Nummer ablesen</strong>. Hauptgruppe I → 1 Valenzelektron, Hauptgruppe IV → 4, Hauptgruppe VII → 7, und so weiter.</p>
+
+  <table class="value-table">
+    <thead>
+      <tr><th>Element</th><th>Konfiguration</th><th>Aussenschale</th><th>Hauptgruppe</th><th>Valenzelektronen</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Li</td><td>1s² 2s¹</td><td>2s¹</td><td>I</td><td>1</td></tr>
+      <tr><td>Be</td><td>1s² 2s²</td><td>2s²</td><td>II</td><td>2</td></tr>
+      <tr><td>B</td><td>1s² 2s² 2p¹</td><td>2s² 2p¹</td><td>III</td><td>3</td></tr>
+      <tr><td>C</td><td>1s² 2s² 2p²</td><td>2s² 2p²</td><td>IV</td><td>4</td></tr>
+      <tr><td>N</td><td>1s² 2s² 2p³</td><td>2s² 2p³</td><td>V</td><td>5</td></tr>
+      <tr><td>O</td><td>1s² 2s² 2p⁴</td><td>2s² 2p⁴</td><td>VI</td><td>6</td></tr>
+      <tr><td>F</td><td>1s² 2s² 2p⁵</td><td>2s² 2p⁵</td><td>VII</td><td>7</td></tr>
+      <tr><td>Ne</td><td>1s² 2s² 2p⁶</td><td>2s² 2p⁶</td><td>VIII</td><td>8</td></tr>
+    </tbody>
+  </table>
+
+  <div class="discovery"><div class="discovery-label">Wichtig: nur Hauptgruppen!</div>
+    <p>Diese einfache Regel «Valenzelektronen = Hauptgruppen-Nummer» gilt nur für die <strong>Hauptgruppen-Elemente</strong>. Bei den Nebengruppen (d-Block) ist es komplizierter — dort werden auch d-Elektronen für Bindungen genutzt. Diese Fälle behandeln wir hier nicht.</p>
+  </div>
+
+  <h3>10.4 Vom Orbital zum Lewis-Symbol — die sp³-Hybridisierung</h3>
+  <p>Jetzt steht uns ein letztes Hindernis im Weg. Schauen wir auf die Aussenschale von Kohlenstoff: 2s² 2p². Das wären <strong>zwei verschiedene Sorten</strong> Orbitale — ein s-Orbital (kugelig) mit 2 Elektronen und zwei p-Orbitale (hantelförmig) mit je 1 Elektron. Wenn wir das Lewis-Symbol einfach als «Punkte um das Symbol» zeichnen wollen, sollten aber alle vier Aussenelektronen <strong>gleichwertig</strong> sein.</p>
+
+  <p>Hier hilft das Konzept der <strong>Hybridisierung</strong>. Stellen Sie sich vor, Sie mischen ein s-Orbital mit drei p-Orbitalen. Das Resultat sind <strong>vier neue, völlig gleichwertige Orbitale</strong>, die wir <strong>sp³-Hybridorbitale</strong> nennen. Räumlich zeigen sie in vier Richtungen — in die Ecken eines Tetraeders, also möglichst weit voneinander weg.</p>
+
+  <div class="hybrid-box">
+    <div class="hybrid-grid">
+      <div class="hybrid-before">
+        <div class="hybrid-label">vorher: 4 unterschiedliche Orbitale</div>
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- s-Orbital: Kreis -->
+          <circle cx="50" cy="60" r="22" fill="#4a7ab5" opacity="0.4" stroke="#2c4a6e" stroke-width="1.5"/>
+          <text x="50" y="105" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#2c4a6e" font-weight="700">s</text>
+          <!-- 3 p-Orbitale: Hanteln -->
+          <g transform="translate(120,60)">
+            <ellipse cx="-12" cy="0" rx="11" ry="6" fill="#c08a56" opacity="0.4" stroke="#8a3d22" stroke-width="1.2"/>
+            <ellipse cx="12"  cy="0" rx="11" ry="6" fill="#c08a56" opacity="0.4" stroke="#8a3d22" stroke-width="1.2"/>
+            <text y="45" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#8a3d22" font-weight="700">pₓ</text>
+          </g>
+          <g transform="translate(170,60)">
+            <ellipse cx="0" cy="-12" rx="6" ry="11" fill="#c08a56" opacity="0.4" stroke="#8a3d22" stroke-width="1.2"/>
+            <ellipse cx="0" cy="12"  rx="6" ry="11" fill="#c08a56" opacity="0.4" stroke="#8a3d22" stroke-width="1.2"/>
+            <text y="45" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#8a3d22" font-weight="700">pᵧ</text>
+          </g>
+          <g transform="translate(85,150)">
+            <ellipse cx="-9" cy="-9" rx="9" ry="6" fill="#c08a56" opacity="0.4" stroke="#8a3d22" stroke-width="1.2" transform="rotate(45)"/>
+            <ellipse cx="9"  cy="9"  rx="9" ry="6" fill="#c08a56" opacity="0.4" stroke="#8a3d22" stroke-width="1.2" transform="rotate(45)"/>
+            <text y="35" text-anchor="middle" font-family="DM Sans" font-size="11" fill="#8a3d22" font-weight="700">p_z</text>
+          </g>
+        </svg>
+      </div>
+      <div class="hybrid-arrow">
+        <span>mischen</span>
+        <span class="big-arrow">→</span>
+        <span>(hybridisieren)</span>
+      </div>
+      <div class="hybrid-after">
+        <div class="hybrid-label">nachher: 4 gleichwertige sp³-Orbitale</div>
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- 4 identische sp³-Orbitale, tetraedrisch angeordnet -->
+          <g>
+            <!-- oben rechts -->
+            <ellipse cx="135" cy="60" rx="22" ry="11" fill="#a890c8" opacity="0.5" stroke="#4a3668" stroke-width="1.3" transform="rotate(-30 135 60)"/>
+            <text x="160" y="50" font-family="DM Sans" font-size="11" fill="#4a3668" font-weight="700">sp³</text>
+            <!-- oben links -->
+            <ellipse cx="85" cy="60" rx="22" ry="11" fill="#a890c8" opacity="0.5" stroke="#4a3668" stroke-width="1.3" transform="rotate(30 85 60)"/>
+            <text x="60" y="50" font-family="DM Sans" font-size="11" fill="#4a3668" font-weight="700">sp³</text>
+            <!-- unten rechts -->
+            <ellipse cx="135" cy="140" rx="22" ry="11" fill="#a890c8" opacity="0.5" stroke="#4a3668" stroke-width="1.3" transform="rotate(30 135 140)"/>
+            <text x="160" y="155" font-family="DM Sans" font-size="11" fill="#4a3668" font-weight="700">sp³</text>
+            <!-- unten links -->
+            <ellipse cx="85" cy="140" rx="22" ry="11" fill="#a890c8" opacity="0.5" stroke="#4a3668" stroke-width="1.3" transform="rotate(-30 85 140)"/>
+            <text x="60" y="155" font-family="DM Sans" font-size="11" fill="#4a3668" font-weight="700">sp³</text>
+            <!-- Atomkern in der Mitte -->
+            <circle cx="110" cy="100" r="6" fill="#b85535"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p style="margin-top:12px; margin-bottom:0; font-size:0.88rem; color:var(--text-muted); text-align:center;">
+      Das eine s- und die drei p-Orbitale «verschmelzen» rechnerisch zu vier neuen, gleich aussehenden Orbitalen.
+    </p>
+  </div>
+
+  <p>Damit haben wir vier Orbitale, die alle gleich gut Elektronen aufnehmen können — und die räumlich in alle vier «Ecken» um den Kern zeigen. Diese vier Orbitale stellen wir uns vereinfacht als <strong>vier Plätze</strong> um das Atom vor: oben, rechts, unten, links.</p>
+
+  <div class="discovery"><div class="discovery-label">Modellbewusstsein</div>
+    <p>Achtung: Die Hybridisierung ist ein <strong>Modell</strong>, kein physikalisches Ereignis. In Wirklichkeit «mischen» sich Orbitale erst dann auf diese Weise, wenn das Atom in einer Bindung steht. Wir nehmen die Vereinfachung trotzdem für isolierte Atome vor, weil sie das Zeichnen von Lewis-Symbolen sehr erleichtert — und für die Hauptgruppen-Chemie zuverlässig richtige Voraussagen macht.</p>
+  </div>
+
+  <h3>10.5 Das Lewis-Symbol</h3>
+
+  <p>Jetzt sind alle Zutaten beisammen. Das Lewis-Symbol ist ganz einfach aufgebaut:</p>
+
+  <div class="merksatz"><div class="merksatz-label">Lewis-Symbol — Regel</div>
+    <p>Schreiben Sie das Elementsymbol. Drumherum — auf den vier «Plätzen» (oben, rechts, unten, links) — verteilen Sie so viele Punkte, wie das Atom Valenzelektronen hat. <strong>Verteilen Sie zuerst einzeln</strong> auf alle vier Plätze (1, 2, 3, 4 Punkte), <strong>danach paaren</strong> Sie auf (5, 6, 7, 8 Punkte).</p>
+  </div>
+
+  <div class="lewis-overview">
+    <div class="lewis-grid">
+      <!-- 8 Lewis-Symbole für Periode 2 -->
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="Li" data-electrons="1"></div><div class="lewis-name">Lithium · 1 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="Be" data-electrons="2"></div><div class="lewis-name">Beryllium · 2 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="B" data-electrons="3"></div><div class="lewis-name">Bor · 3 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="C" data-electrons="4"></div><div class="lewis-name">Kohlenstoff · 4 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="N" data-electrons="5"></div><div class="lewis-name">Stickstoff · 5 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="O" data-electrons="6"></div><div class="lewis-name">Sauerstoff · 6 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="F" data-electrons="7"></div><div class="lewis-name">Fluor · 7 VE</div></div>
+      <div class="lewis-cell"><div class="lewis-symbol-canvas" data-symbol="Ne" data-electrons="8"></div><div class="lewis-name">Neon · 8 VE</div></div>
+    </div>
+    <p style="font-size:0.86rem; color:var(--text-muted); margin-top:14px; text-align:center;">Die Lewis-Symbole für die 2. Periode. Beachten Sie: Bis 4 Punkte → einzeln. Ab 5 → paaren.</p>
+  </div>
+
+  <h3>10.6 Lewis-Symbol-Builder</h3>
+  <p>Trainieren Sie selbst! Wählen Sie ein Element aus, schauen Sie, wie viele Valenzelektronen es hat, und prüfen Sie das Lewis-Symbol Schritt für Schritt.</p>
+
+  <div class="lewis-builder">
+    <div class="lewis-builder-header">
+      <span class="pse-controls-label">Element:</span>
+      <select id="lewisElementSelect" class="lewis-select">
+        <option value="H">Wasserstoff (H) — 1 VE</option>
+        <option value="Li">Lithium (Li) — 1 VE</option>
+        <option value="Be">Beryllium (Be) — 2 VE</option>
+        <option value="B">Bor (B) — 3 VE</option>
+        <option value="C" selected>Kohlenstoff (C) — 4 VE</option>
+        <option value="N">Stickstoff (N) — 5 VE</option>
+        <option value="O">Sauerstoff (O) — 6 VE</option>
+        <option value="F">Fluor (F) — 7 VE</option>
+        <option value="Ne">Neon (Ne) — 8 VE</option>
+        <option value="Na">Natrium (Na) — 1 VE</option>
+        <option value="Mg">Magnesium (Mg) — 2 VE</option>
+        <option value="Al">Aluminium (Al) — 3 VE</option>
+        <option value="Si">Silicium (Si) — 4 VE</option>
+        <option value="P">Phosphor (P) — 5 VE</option>
+        <option value="S">Schwefel (S) — 6 VE</option>
+        <option value="Cl">Chlor (Cl) — 7 VE</option>
+        <option value="Ar">Argon (Ar) — 8 VE</option>
+      </select>
+    </div>
+
+    <div class="lewis-builder-body">
+      <div class="lewis-canvas-wrap">
+        <div class="lewis-symbol-canvas lewis-canvas-big" id="lewisBuilderCanvas" data-symbol="C" data-electrons="0"></div>
+        <div class="lewis-builder-counter" id="lewisCounter">0 / 4 Elektronen</div>
+      </div>
+      <div class="lewis-builder-controls">
+        <button class="lewis-btn primary" id="lewisAddBtn" onclick="lewisAdd()">+ Punkt setzen</button>
+        <button class="lewis-btn" onclick="lewisReset()">Zurücksetzen</button>
+        <button class="lewis-btn" onclick="lewisShowSolution()">Lösung zeigen</button>
+        <div class="lewis-builder-hint" id="lewisHint">Klicken Sie auf «+ Punkt setzen», um Schritt für Schritt das Lewis-Symbol aufzubauen.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>10.7 Quiz</h3>
+  <div class="quiz-section">
+    <div class="quiz-header"><div class="quiz-icon">?</div><div class="quiz-title">Kurzcheck: Lektion 10</div></div>
+    <div class="quiz-sub">Testen Sie Ihr Verständnis – klicken Sie auf die richtige Antwort.</div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">1</span>Wie viele Valenzelektronen hat ein Phosphor-Atom (P, Hauptgruppe V)?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>3</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>5</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>15</div>
+      <div class="feedback correct">Richtig! Bei Hauptgruppen-Elementen ist die Anzahl Valenzelektronen gleich der Hauptgruppen-Nummer.</div>
+      <div class="feedback wrong">Tipp: Bei Hauptgruppen-Elementen ist die Anzahl Valenzelektronen gleich der römischen Hauptgruppen-Nummer.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">2</span>Was sagt die Edelgasregel aus?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Edelgase reagieren nur mit anderen Edelgasen.</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Atome streben einen Zustand mit voll besetzter Aussenschale an (8 bzw. 2 Elektronen).</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Edelgase haben immer 8 Protonen.</div>
+      <div class="feedback correct">Genau! Diese Regel erklärt, warum Atome Elektronen abgeben, aufnehmen oder teilen — alles, um die Edelgaskonfiguration zu erreichen.</div>
+      <div class="feedback wrong">Die Edelgasregel ist eine Aussage über die <em>Stabilität von Elektronenkonfigurationen</em>, nicht über Edelgase selbst.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">3</span>Wie viele Punkte hat das Lewis-Symbol von Schwefel (S, Hauptgruppe VI)?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>4 Punkte (alle einzeln)</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>6 Punkte (zwei Paare und zwei einzelne)</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>16 Punkte</div>
+      <div class="feedback correct">Richtig! Schwefel hat 6 Valenzelektronen → 6 Punkte. Verteilen Sie zuerst 4 einzeln (oben, rechts, unten, links), die nächsten zwei werden zu Paaren mit den ersten beiden.</div>
+      <div class="feedback wrong">Erinnerung: Anzahl Punkte = Anzahl Valenzelektronen = Hauptgruppen-Nummer. Schwefel ist in Hauptgruppe VI.</div>
+    </div>
+
+    <div class="question">
+      <div class="q-text"><span class="q-num">4</span>Warum gibt Natrium so leicht ein Elektron ab und wird zu Na⁺?</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Weil Natrium ein Metall ist.</div>
+      <div class="option" data-correct="true" onclick="selectOption(this)"><span class="radio"></span>Weil Na⁺ dann die Elektronenkonfiguration des Edelgases Neon hat — also die stabile Edelgaskonfiguration.</div>
+      <div class="option" data-correct="false" onclick="selectOption(this)"><span class="radio"></span>Weil Na⁺ kleiner ist als ein Natrium-Atom.</div>
+      <div class="feedback correct">Genau! Die Edelgasregel ist die treibende Kraft. Na hat 1 Valenzelektron in der 3. Schale; gibt es dieses ab, ist die 2. Schale die neue Aussenschale — und die ist mit 8 Elektronen voll besetzt (= Edelgas-Konfiguration).</div>
+      <div class="feedback wrong">Die kleinere Grösse ist eine Folge, nicht der Grund. Schauen Sie sich an, welche Konfiguration Na⁺ hat — und vergleichen Sie mit Neon.</div>
+    </div>
+  </div>
+
+  <h4>Aufgaben zu Lektion 10</h4>
+  <div class="task-links" style="grid-template-columns: 1fr;">
+    <div class="task-card onenote" style="cursor:pointer;" onclick="this.querySelector('.task-hint').classList.toggle('show')">
+      <div class="task-card-icon">&#128221;</div>
+      <div class="task-card-title">Aufgaben 10.1 – 10.3</div>
+      <div class="task-card-desc">Klassennotizbuch · Klicken Sie für den Ablageort</div>
+      <div class="task-hint">Die Aufgaben finden Sie in Ihrem persönlichen Ordner im Klassennotizbuch <strong>GKG_Ch_2029_E</strong> unter <strong>4 Atombau – Aufgaben Atombau</strong></div>
+    </div>
+  </div>
+
+  <div class="bridge-box">
+    <strong>Brücke zu Phase 4:</strong> Sie können jetzt Lewis-Symbole zeichnen — also auf einen Blick sehen, wie viele Aussenelektronen ein Atom hat und wie es nach der Edelgasregel «strebt». In Phase 4 schauen wir uns an, <em>wie</em> sich Atome zusammenfinden, um diese Edelgaskonfiguration zu erreichen: durch Elektronen-Übergabe (Ionenbindung) oder Elektronen-Teilung (kovalente Bindung). Das Lewis-Symbol bleibt unser Hauptwerkzeug.
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!--                  ZUSAMMENFASSUNG PHASE 3                      -->
+<!-- ============================================================ -->
+<section id="zusammenfassung3">
+  <div class="lesson-header">
+    <div class="lesson-number">Zusammenfassung</div>
+    <h2>Was Sie aus Phase 3 mitnehmen</h2>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card">
+      <h4>Periodensystem</h4>
+      <p>Geordnet nach <strong>Protonenzahl</strong>. Periode = Hauptschalen-Anzahl. Gruppe = Spalte mit ähnlichen Eigenschaften. Hauptgruppen I–VIII, dazwischen Nebengruppen. Block-Struktur (s, p, d, f) verbindet das PSE mit dem Orbitalmodell.</p>
+    </div>
+    <div class="summary-card">
+      <h4>Trends</h4>
+      <p><strong>Atomradius</strong> nimmt nach rechts ab (mehr Kernladung), nach unten zu (neue Schale). <strong>Ionisierungsenergie</strong> und <strong>Elektronegativität</strong> verhalten sich umgekehrt: rechts oben am höchsten.</p>
+    </div>
+    <div class="summary-card">
+      <h4>Ionen</h4>
+      <p>Atome werden durch <strong>Elektronenabgabe</strong> zu <strong>Kationen</strong> (positiv), durch <strong>Elektronenaufnahme</strong> zu <strong>Anionen</strong> (negativ). Die Ladung ergibt sich aus dem Streben nach Edelgaskonfiguration.</p>
+    </div>
+    <div class="summary-card">
+      <h4>Edelgasregel</h4>
+      <p>Atome streben eine voll besetzte äusserste Schale an: 8 Elektronen (Oktett), bei H und He 2 Elektronen (Duett). Diese Regel erklärt das chemische Verhalten der Hauptgruppen-Elemente.</p>
+    </div>
+    <div class="summary-card">
+      <h4>Valenzelektronen</h4>
+      <p>Elektronen in der höchsten besetzten Hauptschale. Anzahl = Hauptgruppen-Nummer. Sie bestimmen, wie ein Atom in chemischen Bindungen «sich verhält».</p>
+    </div>
+    <div class="summary-card">
+      <h4>Lewis-Symbol</h4>
+      <p>Elementsymbol mit Punkten ringsum. Grundlage: <strong>sp³-Hybridisierung</strong> liefert vier gleichwertige Plätze. Erst einzeln verteilen (1–4), dann paaren (5–8).</p>
+    </div>
+  </div>
+
+  <div class="merksatz"><div class="merksatz-label">Roter Faden</div>
+    <p>Phase 3 hat aus dem Atomaufbau eine <strong>chemische Logik</strong> gemacht: Aus der Position eines Hauptgruppen-Elements im PSE lassen sich seine wichtigsten Eigenschaften (Grösse, Reaktivität, Bindungstendenz) ableiten — und das alles aufgrund eines einzigen Prinzips, der Edelgasregel. In Phase 4 nutzen wir diese Logik, um die <strong>Bindungen zwischen Atomen</strong> zu verstehen.</p>
+  </div>
+</section>
 
 
 </main>
@@ -1397,6 +2490,424 @@ function selectOption(el) {
 }
 
 /* =================================================================
+   IONEN-ANIMATION (L9)
+   ================================================================= */
+const ION_ANIM_TEXTS = [
+  'Ein Natrium-Atom hat 11 Protonen und 11 Elektronen — es ist elektrisch <strong>neutral</strong>. Das eine Elektron in der äussersten Schale (rot markiert) ist relativ locker gebunden.',
+  'Wir führen <strong>Ionisierungsenergie</strong> zu — genug, um das äusserste Elektron vollständig vom Atom abzulösen. Bei Natrium beträgt die IE 496 kJ/mol.',
+  'Übrig bleiben zwei Teilchen: ein <strong>Natrium-Kation Na⁺</strong> mit nur noch 10 Elektronen (positiv geladen, weil 11 Protonen 10 Elektronen «überzählen») und ein freies <strong>Elektron e⁻</strong>. Das Na⁺-Ion hat jetzt die Elektronenkonfiguration des Edelgases Neon — eine sehr stabile Anordnung.'
+];
+
+function setIonAnimStep(step) {
+  const arrow = document.getElementById('ionArrow');
+  const result = document.getElementById('ionResult');
+  const atom = document.getElementById('ionAtom');
+  const valE = document.getElementById('valenceElectron');
+  const explain = document.getElementById('ionAnimExplain');
+  if (!arrow || !result || !atom) return;
+
+  // Buttons aktivieren
+  document.querySelectorAll('.ion-anim-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === step);
+  });
+
+  if (step === 0) {
+    atom.style.opacity = '1';
+    atom.style.transform = 'translate(0,0)';
+    if (valE) { valE.style.opacity = '1'; valE.style.transform = 'translate(0,0)'; }
+    arrow.style.opacity = '0';
+    result.style.opacity = '0';
+  } else if (step === 1) {
+    atom.style.opacity = '1';
+    if (valE) {
+      valE.style.transition = 'transform 0.6s ease-out, opacity 0.6s';
+      valE.style.transform = 'translate(50px, -10px)';
+    }
+    arrow.style.opacity = '1';
+    arrow.style.transition = 'opacity 0.4s';
+    result.style.opacity = '0';
+  } else if (step === 2) {
+    atom.style.opacity = '0';
+    arrow.style.opacity = '1';
+    result.style.opacity = '1';
+    result.style.transition = 'opacity 0.5s';
+  }
+
+  if (explain) explain.innerHTML = ION_ANIM_TEXTS[step];
+}
+
+/* =================================================================
+   TREND-PSE (L9) — eigene kompakte Instanz mit Heatmap
+   ================================================================= */
+
+// Daten für Trends — nur Hauptgruppen-Elemente Perioden 1-5 (didaktisch ausreichend)
+// Quellen: Standardwerte aus Chemie-Datenbanken (IUPAC 2013, Pauling-EN)
+const TREND_DATA = {
+  // [Z, sym, Periode, Gruppe, Atomradius pm, IE kJ/mol, EN Pauling]
+  1:  { sym: 'H',  period: 1, group: 1,  radius: 53,  ie: 1312, en: 2.20 },
+  2:  { sym: 'He', period: 1, group: 18, radius: 31,  ie: 2372, en: null },
+
+  3:  { sym: 'Li', period: 2, group: 1,  radius: 167, ie: 520,  en: 0.98 },
+  4:  { sym: 'Be', period: 2, group: 2,  radius: 112, ie: 899,  en: 1.57 },
+  5:  { sym: 'B',  period: 2, group: 13, radius: 87,  ie: 801,  en: 2.04 },
+  6:  { sym: 'C',  period: 2, group: 14, radius: 67,  ie: 1086, en: 2.55 },
+  7:  { sym: 'N',  period: 2, group: 15, radius: 56,  ie: 1402, en: 3.04 },
+  8:  { sym: 'O',  period: 2, group: 16, radius: 48,  ie: 1314, en: 3.44 },
+  9:  { sym: 'F',  period: 2, group: 17, radius: 42,  ie: 1681, en: 3.98 },
+  10: { sym: 'Ne', period: 2, group: 18, radius: 38,  ie: 2081, en: null },
+
+  11: { sym: 'Na', period: 3, group: 1,  radius: 190, ie: 496,  en: 0.93 },
+  12: { sym: 'Mg', period: 3, group: 2,  radius: 145, ie: 738,  en: 1.31 },
+  13: { sym: 'Al', period: 3, group: 13, radius: 118, ie: 578,  en: 1.61 },
+  14: { sym: 'Si', period: 3, group: 14, radius: 111, ie: 786,  en: 1.90 },
+  15: { sym: 'P',  period: 3, group: 15, radius: 98,  ie: 1012, en: 2.19 },
+  16: { sym: 'S',  period: 3, group: 16, radius: 88,  ie: 1000, en: 2.58 },
+  17: { sym: 'Cl', period: 3, group: 17, radius: 79,  ie: 1251, en: 3.16 },
+  18: { sym: 'Ar', period: 3, group: 18, radius: 71,  ie: 1521, en: null },
+
+  19: { sym: 'K',  period: 4, group: 1,  radius: 243, ie: 419,  en: 0.82 },
+  20: { sym: 'Ca', period: 4, group: 2,  radius: 194, ie: 590,  en: 1.00 },
+  31: { sym: 'Ga', period: 4, group: 13, radius: 136, ie: 579,  en: 1.81 },
+  32: { sym: 'Ge', period: 4, group: 14, radius: 125, ie: 762,  en: 2.01 },
+  33: { sym: 'As', period: 4, group: 15, radius: 114, ie: 947,  en: 2.18 },
+  34: { sym: 'Se', period: 4, group: 16, radius: 103, ie: 941,  en: 2.55 },
+  35: { sym: 'Br', period: 4, group: 17, radius: 94,  ie: 1140, en: 2.96 },
+  36: { sym: 'Kr', period: 4, group: 18, radius: 88,  ie: 1351, en: 3.00 },
+
+  37: { sym: 'Rb', period: 5, group: 1,  radius: 265, ie: 403,  en: 0.82 },
+  38: { sym: 'Sr', period: 5, group: 2,  radius: 219, ie: 549,  en: 0.95 },
+  49: { sym: 'In', period: 5, group: 13, radius: 156, ie: 558,  en: 1.78 },
+  50: { sym: 'Sn', period: 5, group: 14, radius: 145, ie: 709,  en: 1.96 },
+  51: { sym: 'Sb', period: 5, group: 15, radius: 133, ie: 834,  en: 2.05 },
+  52: { sym: 'Te', period: 5, group: 16, radius: 123, ie: 869,  en: 2.10 },
+  53: { sym: 'I',  period: 5, group: 17, radius: 115, ie: 1008, en: 2.66 },
+  54: { sym: 'Xe', period: 5, group: 18, radius: 108, ie: 1170, en: 2.60 }
+};
+
+const TREND_LABELS = {
+  none:   { unit: '',          name: '—' },
+  radius: { unit: 'pm',        name: 'Atomradius' },
+  ie:     { unit: 'kJ/mol',    name: 'Ionisierungsenergie' },
+  en:     { unit: ' (Pauling)', name: 'Elektronegativität' }
+};
+
+let currentTrend = 'none';
+
+function buildTrendPse() {
+  const grid = document.getElementById('pseTrendGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  // Spaltenüberschrift
+  const corner = document.createElement('div');
+  corner.className = 'pse-cell empty';
+  grid.appendChild(corner);
+  for (let g = 1; g <= 18; g++) {
+    const lbl = document.createElement('div');
+    lbl.className = 'pse-col-label';
+    if (HAUPTGRUPPEN_MAP[g]) {
+      lbl.innerHTML = `<span style="color:var(--accent); font-weight:700;">${HAUPTGRUPPEN_MAP[g]}</span>`;
+    } else {
+      lbl.textContent = g;
+    }
+    grid.appendChild(lbl);
+  }
+
+  // Lookup
+  const map = {};
+  Object.values(TREND_DATA).forEach(el => {
+    map[`${el.period}_${el.group}`] = el;
+  });
+
+  // Zeilen für Perioden 1–5
+  for (let p = 1; p <= 5; p++) {
+    const rowLbl = document.createElement('div');
+    rowLbl.className = 'pse-row-label';
+    rowLbl.textContent = p;
+    grid.appendChild(rowLbl);
+
+    for (let g = 1; g <= 18; g++) {
+      const el = map[`${p}_${g}`];
+      if (el) {
+        grid.appendChild(makeTrendCell(el));
+      } else {
+        // Leerzelle für Nebengruppen, die hier nicht abgebildet sind
+        const slot = document.createElement('div');
+        slot.className = 'pse-cell empty';
+        // Visueller Hinweis für Nebengruppen-Bereich (Perioden 4+5, Gruppen 3-12)
+        if ((p === 4 || p === 5) && g >= 3 && g <= 12) {
+          slot.style.background = 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 6px)';
+          slot.style.borderRadius = '3px';
+        }
+        grid.appendChild(slot);
+      }
+    }
+  }
+
+  applyTrendToCells();
+}
+
+function makeTrendCell(el) {
+  const cell = document.createElement('div');
+  cell.className = 'pse-cell';
+  cell.dataset.z = Object.keys(TREND_DATA).find(k => TREND_DATA[k] === el);
+  cell.dataset.group = el.group;
+
+  cell.innerHTML = `
+    <span class="pse-sym" style="font-size:0.74rem;">${el.sym}</span>
+    <span class="trend-value" style="font-family:var(--mono); font-size:0.55rem; line-height:1; margin-top:2px; color:inherit;"></span>
+  `;
+  cell.title = el.sym;
+  return cell;
+}
+
+function applyTrendToCells() {
+  const grid = document.getElementById('pseTrendGrid');
+  if (!grid) return;
+
+  const cells = grid.querySelectorAll('.pse-cell:not(.empty)[data-z]');
+
+  if (currentTrend === 'none') {
+    cells.forEach(c => {
+      c.style.background = 'var(--bg-alt)';
+      c.style.color = 'var(--text)';
+      const v = c.querySelector('.trend-value');
+      if (v) v.textContent = '';
+    });
+    updateTrendLegend();
+    return;
+  }
+
+  // Min und Max bestimmen für den aktuellen Trend
+  const values = [];
+  cells.forEach(c => {
+    const z = c.dataset.z;
+    const el = TREND_DATA[z];
+    if (!el) return;
+    const v = el[currentTrend];
+    if (v != null) values.push(v);
+  });
+  const minV = Math.min(...values);
+  const maxV = Math.max(...values);
+
+  cells.forEach(c => {
+    const z = c.dataset.z;
+    const el = TREND_DATA[z];
+    if (!el) return;
+    const v = el[currentTrend];
+    const valSpan = c.querySelector('.trend-value');
+
+    if (v == null) {
+      c.style.background = '#e5e2dd';
+      c.style.color = 'var(--text-muted)';
+      if (valSpan) valSpan.textContent = '–';
+      return;
+    }
+
+    // Normierung 0..1
+    const norm = (v - minV) / (maxV - minV);
+    // Coral-Heatmap (hell = niedrig, dunkel = hoch)
+    const lightness = 92 - norm * 50; // 92% bei min, 42% bei max
+    const saturation = 50 + norm * 20;
+    c.style.background = `hsl(15, ${saturation}%, ${lightness}%)`;
+    c.style.color = lightness < 60 ? 'white' : '#3a1a0a';
+
+    if (valSpan) {
+      valSpan.textContent = (currentTrend === 'en') ? v.toFixed(2) : Math.round(v);
+    }
+  });
+
+  updateTrendLegend();
+}
+
+function setTrend(trend) {
+  currentTrend = trend;
+  document.querySelectorAll('#pseTrendContainer .pse-toggle').forEach(b => {
+    b.classList.toggle('active', b.dataset.trend === trend);
+  });
+  applyTrendToCells();
+}
+
+function updateTrendLegend() {
+  const legend = document.getElementById('pseTrendLegend');
+  if (!legend) return;
+
+  if (currentTrend === 'none') {
+    legend.innerHTML = '<div class="pse-legend-item" style="color:var(--text-muted); font-style:italic;">Wählen Sie oben einen Trend, um die Heatmap einzublenden.</div>';
+    return;
+  }
+
+  const t = TREND_LABELS[currentTrend];
+  const values = [];
+  document.querySelectorAll('#pseTrendGrid .pse-cell:not(.empty)[data-z]').forEach(c => {
+    const z = c.dataset.z;
+    const el = TREND_DATA[z];
+    if (el && el[currentTrend] != null) values.push(el[currentTrend]);
+  });
+  const minV = Math.min(...values);
+  const maxV = Math.max(...values);
+  const fmt = v => currentTrend === 'en' ? v.toFixed(2) : Math.round(v);
+
+  legend.innerHTML = `
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px;">
+      <div style="font-family:var(--mono); font-size:0.75rem; font-weight:600; color:var(--text);">${t.name}</div>
+      <div style="display:flex; align-items:center; gap:8px; font-size:0.78rem; color:var(--text-muted);">
+        <span>${fmt(minV)}${t.unit}</span>
+        <div style="width:120px; height:14px; border-radius:3px; background:linear-gradient(to right, hsl(15, 50%, 92%), hsl(15, 70%, 42%)); border:1px solid var(--border);"></div>
+        <span>${fmt(maxV)}${t.unit}</span>
+      </div>
+      <div style="font-size:0.78rem; color:var(--text-muted); font-style:italic;">→ Lesehilfe: dunkler = grösserer Wert</div>
+    </div>
+  `;
+}
+
+/* =================================================================
+   LEWIS-SYMBOLE (L10)
+   ================================================================= */
+
+// Reihenfolge der Plätze beim Setzen der Punkte
+// Position: 'top', 'right', 'bottom', 'left' — jeweils mit Anzahl 1 oder 2 Punkten
+// Phase 1: einzelne Punkte auf alle 4 Plätze (oben, rechts, unten, links)
+// Phase 2: Paare bilden in derselben Reihenfolge
+
+function renderLewisSymbol(canvas, symbol, n) {
+  // Räumt das Canvas und baut es neu auf
+  canvas.innerHTML = '';
+
+  // Counts pro Position (max 2 pro Position)
+  const positions = { top: 0, right: 0, bottom: 0, left: 0 };
+  const order = ['top', 'right', 'bottom', 'left']; // Phase 1: einzeln
+  let remaining = n;
+  // Phase 1
+  for (let i = 0; i < 4 && remaining > 0; i++) {
+    positions[order[i]] = 1;
+    remaining--;
+  }
+  // Phase 2: paaren in derselben Reihenfolge
+  for (let i = 0; i < 4 && remaining > 0; i++) {
+    if (positions[order[i]] === 1) {
+      positions[order[i]] = 2;
+      remaining--;
+    }
+  }
+
+  // Wasserstoff: 1 Punkt rechts vom Symbol (Sonderfall, nur 1 Plätzchen besetzbar)
+  if (symbol === 'H' && n === 1) {
+    positions.top = 0;
+    positions.right = 1;
+  }
+
+  // 3x3 Grid: [top-left, top, top-right, left, center, right, bottom-left, bottom, bottom-right]
+  // Wir nutzen nur top (Pos 2), right (Pos 6), bottom (Pos 8), left (Pos 4), center (Pos 5)
+  const cells = [
+    { type: 'empty' },
+    { type: 'pos', pos: 'top' },
+    { type: 'empty' },
+    { type: 'pos', pos: 'left' },
+    { type: 'center' },
+    { type: 'pos', pos: 'right' },
+    { type: 'empty' },
+    { type: 'pos', pos: 'bottom' },
+    { type: 'empty' }
+  ];
+
+  cells.forEach(cell => {
+    const el = document.createElement('div');
+    if (cell.type === 'empty') {
+      // Spacer
+    } else if (cell.type === 'center') {
+      el.className = 'lewis-center';
+      el.textContent = symbol;
+    } else if (cell.type === 'pos') {
+      el.className = 'lewis-pos';
+      const count = positions[cell.pos];
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'lewis-dot';
+        el.appendChild(dot);
+      }
+    }
+    canvas.appendChild(el);
+  });
+}
+
+function renderAllLewisSymbols() {
+  document.querySelectorAll('.lewis-symbol-canvas:not(#lewisBuilderCanvas)').forEach(c => {
+    const sym = c.dataset.symbol;
+    const n = parseInt(c.dataset.electrons) || 0;
+    renderLewisSymbol(c, sym, n);
+  });
+}
+
+/* === LEWIS-BUILDER === */
+const VE_MAP = {
+  'H': 1, 'Li': 1, 'Be': 2, 'B': 3, 'C': 4, 'N': 5, 'O': 6, 'F': 7, 'Ne': 8,
+  'Na': 1, 'Mg': 2, 'Al': 3, 'Si': 4, 'P': 5, 'S': 6, 'Cl': 7, 'Ar': 8
+};
+
+let lewisBuilderState = { symbol: 'C', current: 0 };
+
+function lewisUpdate() {
+  const canvas = document.getElementById('lewisBuilderCanvas');
+  const counter = document.getElementById('lewisCounter');
+  const hint = document.getElementById('lewisHint');
+  const addBtn = document.getElementById('lewisAddBtn');
+  if (!canvas) return;
+
+  const max = VE_MAP[lewisBuilderState.symbol] || 0;
+  canvas.dataset.symbol = lewisBuilderState.symbol;
+  canvas.dataset.electrons = lewisBuilderState.current;
+  renderLewisSymbol(canvas, lewisBuilderState.symbol, lewisBuilderState.current);
+
+  counter.textContent = `${lewisBuilderState.current} / ${max} Elektronen`;
+
+  // Hinweise je nach Stand
+  if (lewisBuilderState.current === 0) {
+    hint.innerHTML = `Wir starten mit dem Symbol <strong>${lewisBuilderState.symbol}</strong>. Klicken Sie «+ Punkt setzen», um den ersten Punkt zu platzieren.`;
+  } else if (lewisBuilderState.current < 4 && lewisBuilderState.current < max) {
+    hint.innerHTML = `Phase 1: Wir verteilen die Punkte einzeln auf die vier Plätze (oben, rechts, unten, links). Noch ${max - lewisBuilderState.current} Punkt(e) zu setzen.`;
+  } else if (lewisBuilderState.current === 4 && max > 4) {
+    hint.innerHTML = `Vier Plätze sind besetzt. Ab jetzt kommen die weiteren Punkte als Paare zu den bestehenden — Phase 2 beginnt.`;
+  } else if (lewisBuilderState.current < max) {
+    hint.innerHTML = `Phase 2: Paare auffüllen. Noch ${max - lewisBuilderState.current} Punkt(e) zu setzen.`;
+  } else {
+    hint.innerHTML = `<strong>Fertig!</strong> Sie haben alle ${max} Valenzelektronen platziert. Das ist das Lewis-Symbol von ${lewisBuilderState.symbol}.`;
+  }
+
+  // Add-Button deaktivieren wenn voll
+  if (addBtn) addBtn.disabled = lewisBuilderState.current >= max;
+}
+
+function lewisAdd() {
+  const max = VE_MAP[lewisBuilderState.symbol] || 0;
+  if (lewisBuilderState.current < max) {
+    lewisBuilderState.current++;
+    lewisUpdate();
+  }
+}
+
+function lewisReset() {
+  lewisBuilderState.current = 0;
+  lewisUpdate();
+}
+
+function lewisShowSolution() {
+  lewisBuilderState.current = VE_MAP[lewisBuilderState.symbol] || 0;
+  lewisUpdate();
+}
+
+function lewisInit() {
+  const select = document.getElementById('lewisElementSelect');
+  if (!select) return;
+  select.addEventListener('change', e => {
+    lewisBuilderState.symbol = e.target.value;
+    lewisBuilderState.current = 0;
+    lewisUpdate();
+  });
+  lewisUpdate();
+}
+
+/* =================================================================
    PROGRESS BAR
    ================================================================= */
 function updateProgress() {
@@ -1410,7 +2921,12 @@ window.addEventListener('scroll', updateProgress);
 /* =================================================================
    INIT
    ================================================================= */
-document.addEventListener('DOMContentLoaded', buildPse);
+document.addEventListener('DOMContentLoaded', () => {
+  buildPse();
+  buildTrendPse();
+  renderAllLewisSymbols();
+  lewisInit();
+});
 </script>
 </body>
 </html>
