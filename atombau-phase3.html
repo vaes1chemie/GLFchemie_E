@@ -501,12 +501,20 @@ em { font-style: italic; color: var(--text-muted); }
   color: var(--accent);
 }
 .pse-detail-title { font-family: var(--serif); font-size: 1.4rem; line-height: 1.2; }
-.pse-detail-body { display: grid; grid-template-columns: 1fr; gap: 14px; }
-.pse-detail-image { width: 100%; max-width: 320px; border-radius: 8px; }
+.pse-detail-body { display: block; }
+.pse-detail-image { width: 100%; max-width: 280px; border-radius: 8px; display: block; }
 .pse-detail-text { font-size: 0.93rem; line-height: 1.65; }
+.pse-detail-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 14px;
+}
 .pse-detail-elements {
   display: flex; flex-wrap: wrap; gap: 6px;
-  margin: 8px 0;
+  justify-content: center;
+  margin: 0;
 }
 .pse-detail-elem-pill {
   background: var(--accent-light);
@@ -538,13 +546,6 @@ em { font-style: italic; color: var(--text-muted); }
   text-align: left;
 }
 .pse-detail-table th { background: var(--bg-alt); font-weight: 600; }
-
-@media (min-width: 700px) {
-  .pse-detail-body {
-    grid-template-columns: 280px 1fr;
-    align-items: start;
-  }
-}
 
 /* === ZEITSTRAHL === */
 .timeline {
@@ -1437,10 +1438,6 @@ section { animation: fadeUp 0.4s ease-out both; }
       <div class="task-hint">Die Aufgaben finden Sie in Ihrem persönlichen Ordner im Klassennotizbuch <strong>GKG_Ch_2029_E</strong> unter <strong>4 Atombau – Aufgaben Atombau</strong></div>
     </div>
   </div>
-
-  <div class="bridge-box">
-    <strong>Brücke zu L9:</strong> Sie kennen jetzt die Struktur des PSE. Aber das PSE ist mehr als eine Tabelle — innerhalb der Gruppen und Perioden gibt es klare <strong>Trends</strong>: Atome werden grösser oder kleiner, Elektronen sind unterschiedlich fest gebunden. Diese Trends folgen einer einfachen Logik. Das schauen wir uns in L9 an.
-  </div>
 </section>
 
 
@@ -1704,10 +1701,6 @@ section { animation: fadeUp 0.4s ease-out both; }
       <div class="task-hint">Die Aufgaben finden Sie in Ihrem persönlichen Ordner im Klassennotizbuch <strong>GKG_Ch_2029_E</strong> unter <strong>4 Atombau – Aufgaben Atombau</strong></div>
     </div>
   </div>
-
-  <div class="bridge-box">
-    <strong>Brücke zu L10:</strong> Sie können jetzt erklären, wie sich Atome unterscheiden und warum manche bereitwillig Elektronen abgeben oder aufnehmen. Aber es bleibt eine Frage offen: <em>Warum</em> wollen Atome überhaupt zu Kationen oder Anionen werden? Die Antwort heisst <strong>Edelgasregel</strong> — und um sie zu verstehen, brauchen wir den Begriff der <strong>Valenzelektronen</strong> und das <strong>Lewis-Symbol</strong>. Das ist L10.
-  </div>
 </section>
 
 
@@ -1728,7 +1721,7 @@ section { animation: fadeUp 0.4s ease-out both; }
   </ul></div>
 
   <h3>10.1 Warum eine neue, einfachere Darstellung?</h3>
-  <p>In Phase 2 haben Sie das Orbitalmodell mit allen Details kennengelernt — s, p, d, f und die Pfeilschreibweise mit auf- und abwärts gerichteten Spins. Das ist sehr genau, aber für die Beschreibung von chemischen Bindungen <strong>zu detailliert</strong>. Wenn wir jedes Sauerstoff-Atom in einem Wassermolekül mit allen Orbitalen aufzeichnen würden, sähe das schnell unübersichtlich aus.</p>
+  <p>In Phase 2 haben Sie das Orbitalmodell mit allen Details kennengelernt — s, p, d, f und die Pfeilschreibweise mit auf- und abwärts gerichteten Spins. Das ist ein sehr genaues Atommodell, aber für die Darstellung von chemischen Bindungen <strong>zu unübersichtlich</strong>. Wenn wir alle Elemente in den Verbindungen mit allen Orbitalen aufzeichnen würden, sähe das schnell unübersichtlich aus.</p>
   <p>Wir brauchen ein Modell, das nur das Wesentliche zeigt: Wie viele Elektronen «interessieren» sich an chemischen Bindungen? Und wie könnten Atome sich zusammenfinden? Genau dafür gibt es das <strong>Lewis-Symbol</strong> — eine einfache, aber unglaublich nützliche Schreibweise.</p>
 
   <h3>10.2 Die Edelgasregel</h3>
@@ -1909,10 +1902,6 @@ section { animation: fadeUp 0.4s ease-out both; }
       <div class="task-card-desc">Klassennotizbuch · Klicken Sie für den Ablageort</div>
       <div class="task-hint">Die Aufgaben finden Sie in Ihrem persönlichen Ordner im Klassennotizbuch <strong>GKG_Ch_2029_E</strong> unter <strong>4 Atombau – Aufgaben Atombau</strong></div>
     </div>
-  </div>
-
-  <div class="bridge-box">
-    <strong>Brücke zu Phase 4:</strong> Sie können jetzt Lewis-Symbole zeichnen — also auf einen Blick sehen, wie viele Aussenelektronen ein Atom hat und wie es nach der Edelgasregel «strebt». In Phase 4 schauen wir uns an, <em>wie</em> sich Atome zusammenfinden, um diese Edelgaskonfiguration zu erreichen: durch Elektronen-Übergabe (Ionenbindung) oder Elektronen-Teilung (kovalente Bindung). Das Lewis-Symbol bleibt unser Hauptwerkzeug.
   </div>
 </section>
 
@@ -2385,7 +2374,7 @@ function openDetailPanel(group) {
       <span class="pse-detail-title">${data.title}</span>
     </div>
     <div class="pse-detail-body">
-      <div>
+      <div class="pse-detail-media">
         <img src="${data.image}" alt="${data.imageAlt}" class="pse-detail-image">
         <div class="pse-detail-elements">
           ${data.elemente.map(e => `<span class="pse-detail-elem-pill">${e}</span>`).join('')}
