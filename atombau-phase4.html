@@ -344,40 +344,6 @@ em { font-style: italic; color: var(--text-muted); }
   font-style: italic;
 }
 
-/* === STOFF-GALERIE (Lektion 12.1) === */
-.stoff-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin: 20px 0 24px;
-}
-.stoff-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-}
-.stoff-card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-}
-.stoff-card .stoff-label {
-  font-family: var(--sans);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-  padding: 10px 8px 8px;
-}
-.stoff-card .stoff-formel {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  padding: 0 8px 10px;
-}
-
 /* === ENTSCHEIDUNGS-TOOL === */
 .bindung-tool {
   background: white;
@@ -449,7 +415,7 @@ em { font-style: italic; color: var(--text-muted); }
 /* === MODELLVERGLEICH === */
 .modell-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
   margin: 20px 0 24px;
 }
@@ -514,7 +480,6 @@ em { font-style: italic; color: var(--text-muted); }
 }
 @media (max-width: 600px) {
   .modell-grid { grid-template-columns: 1fr 1fr; }
-  .stoff-grid { grid-template-columns: 1fr; }
 }
 @media print {
   .sidebar, .progress-bar, .task-links, .bindung-tool { display: none; }
@@ -532,26 +497,29 @@ section { animation: fadeUp 0.4s ease-out both; }
 <!-- ======== SIDEBAR ======== -->
 <nav class="sidebar">
   <div class="sidebar-brand">
-    Thema 4 · Atombau
+    <a href="index.html" style="text-decoration:none; color:inherit;">Atombau</a>
     <small>Chemie GLF · 1. Gymnasium · Va</small>
     <a href="index.html" style="display:inline-flex; align-items:center; gap:4px; font-family:var(--sans); font-size:0.72rem; font-weight:600; color:var(--accent); text-decoration:none; margin-top:8px;">&larr; Themenübersicht</a>
   </div>
 
   <div class="sidebar-phase">Phase 1 · Lektionen 1–3</div>
-  <a href="atombau.html#L1" class="nav-item done"><span class="nav-dot"></span>L1 – Ladungen &amp; innere Struktur</a>
-  <a href="atombau.html#L2" class="nav-item done"><span class="nav-dot"></span>L2 – Streuversuch Rutherford</a>
-  <a href="atombau.html#L3" class="nav-item done"><span class="nav-dot"></span>L3 – Teilchen &amp; Isotope</a>
+  <a href="atombau.html#L1" class="nav-item"><span class="nav-dot"></span>L1 – Ladungen &amp; innere Struktur</a>
+  <a href="atombau.html#L2" class="nav-item"><span class="nav-dot"></span>L2 – Streuversuch Rutherford</a>
+  <a href="atombau.html#L3" class="nav-item"><span class="nav-dot"></span>L3 – Teilchen &amp; Isotope</a>
+  <a href="atombau.html#zusammenfassung" class="nav-item"><span class="nav-dot"></span>Zusammenfassung</a>
 
   <div class="sidebar-phase">Phase 2 · Lektionen 4–7</div>
-  <a href="atombau-phase2.html#L4" class="nav-item done"><span class="nav-dot"></span>L4 – Schalenmodell (Bohr)</a>
-  <a href="atombau-phase2.html#L5" class="nav-item done"><span class="nav-dot"></span>L5 – Orbitalmodell</a>
-  <a href="atombau-phase2.html#L6" class="nav-item done"><span class="nav-dot"></span>L6 – Elektronenkonfiguration</a>
-  <a href="atombau-phase2.html#L7" class="nav-item done"><span class="nav-dot"></span>L7 – Flammenfärbung</a>
+  <a href="atombau-phase2.html#L4" class="nav-item"><span class="nav-dot"></span>L4 – Schalenmodell (Bohr)</a>
+  <a href="atombau-phase2.html#L5" class="nav-item"><span class="nav-dot"></span>L5 – Orbitalmodell</a>
+  <a href="atombau-phase2.html#L6" class="nav-item"><span class="nav-dot"></span>L6 – Elektronenkonfiguration</a>
+  <a href="atombau-phase2.html#L7" class="nav-item"><span class="nav-dot"></span>L7 – Flammenfärbung</a>
+  <a href="atombau-phase2.html#zusammenfassung2" class="nav-item"><span class="nav-dot"></span>Zusammenfassung</a>
 
   <div class="sidebar-phase">Phase 3 · Lektionen 8–10</div>
-  <a href="atombau-phase3.html#L8" class="nav-item done"><span class="nav-dot"></span>L8 – Das Periodensystem</a>
-  <a href="atombau-phase3.html#L9" class="nav-item done"><span class="nav-dot"></span>L9 – Trends im PSE</a>
-  <a href="atombau-phase3.html#L10" class="nav-item done"><span class="nav-dot"></span>L10 – Valenzelektronen &amp; Lewis</a>
+  <a href="atombau-phase3.html#L8" class="nav-item"><span class="nav-dot"></span>L8 – Das Periodensystem</a>
+  <a href="atombau-phase3.html#L9" class="nav-item"><span class="nav-dot"></span>L9 – Trends im PSE</a>
+  <a href="atombau-phase3.html#L10" class="nav-item"><span class="nav-dot"></span>L10 – Valenzelektronen &amp; Lewis</a>
+  <a href="atombau-phase3.html#zusammenfassung3" class="nav-item"><span class="nav-dot"></span>Zusammenfassung</a>
 
   <div class="sidebar-phase">Phase 4 · Lektionen 11–12</div>
   <a href="#L11" class="nav-item active"><span class="nav-dot"></span>L11 – Repetition &amp; Synthese</a>
@@ -648,20 +616,11 @@ section { animation: fadeUp 0.4s ease-out both; }
 
   <h3>11.2 Das Coulomb-Gesetz — der rote Faden</h3>
 
-  <table class="data-table" style="max-width:540px;">
-    <thead><tr><th colspan="2">Coulomb-Gesetz</th></tr></thead>
-    <tbody>
-      <tr>
-        <td style="text-align:center; font-family:var(--serif); padding:18px 16px; width:45%; vertical-align:middle;"><span style="font-size:1.5rem;"><em>F</em> = <em>k</em> · </span><span style="display:inline-block; text-align:center; vertical-align:middle; font-size:1.2rem; line-height:1.3;"><span style="display:block; padding:0 4px;"><em>Q</em><sub>1</sub> · <em>Q</em><sub>2</sub></span><span style="display:block; border-top:2px solid currentColor; padding:2px 4px 0;"><em>r</em><sup>2</sup></span></span></td>
-        <td style="font-size:0.88rem; line-height:1.9; padding:14px 16px;">
-          <strong>F:</strong> elektrostatische Kraft<br>
-          <strong>Q<sub>1</sub>, Q<sub>2</sub>:</strong> Ladungen der Körper<br>
-          <strong>r:</strong> Abstand zwischen den Körpern<br>
-          <strong>k:</strong> Konstante (abhängig vom Medium: Vakuum, Luft, Wasser, …)
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="glossar"><div class="glossar-label">Fachbegriff</div>
+    <div class="glossar-term">Coulomb-Gesetz</div>
+    <p>Die elektrostatische Kraft <span style="font-family:var(--mono)">F</span> zwischen zwei Ladungen <span style="font-family:var(--mono)">q₁</span> und <span style="font-family:var(--mono)">q₂</span> im Abstand <span style="font-family:var(--mono)">r</span> ist proportional zum Produkt der Ladungen und umgekehrt proportional zum Quadrat des Abstands:</p>
+    <p style="text-align:center; font-family:var(--mono); font-size:1.05rem; margin: 10px 0;">F ∝ (q₁ · q₂) / r²</p>
+  </div>
 
   <p>Das Coulomb-Gesetz ist die einzige «physikalische» Formel, die wir im Atombau wirklich brauchen — und sie erklärt erstaunlich viel:</p>
 
@@ -692,7 +651,7 @@ section { animation: fadeUp 0.4s ease-out both; }
   </table>
 
   <div class="merksatz"><div class="merksatz-label">Merksatz</div>
-    <p>Wenn Sie sich <em>eine</em> Idee aus dem ganzen Thema Atombau merken können, dann diese: <strong>Chemie ist im Kern Coulomb-Anziehung zwischen positiven und negativen Ladungen.</strong> Alle anderen Konzepte (Schalen, Orbitale, EN, Bindungstypen) sind Werkzeuge, um diese Anziehung greifbar zu machen.</p>
+    <p>Wenn Sie sich nur <em>eine</em> Idee aus dem ganzen Thema Atombau merken können, dann diese: <strong>Chemie ist im Kern Coulomb-Anziehung zwischen positiven und negativen Ladungen — nichts weiter.</strong> Alle anderen Konzepte (Schalen, Orbitale, EN, Bindungstypen) sind nur Werkzeuge, um diese Anziehung greifbar zu machen.</p>
   </div>
 
   <h3>11.3 Modellvergleich</h3>
@@ -787,24 +746,6 @@ section { animation: fadeUp 0.4s ease-out both; }
 
   <p>Schauen Sie sich diese drei Stoffe an. Sie sehen alle drei kristallin und klar aus — und doch verhalten sie sich völlig unterschiedlich:</p>
 
-  <div class="stoff-grid">
-    <div class="stoff-card">
-      <img src="img/wasser.png" alt="Wassereiskristall">
-      <div class="stoff-label">Wasser (Eis)</div>
-      <div class="stoff-formel">H₂O</div>
-    </div>
-    <div class="stoff-card">
-      <img src="img/nacl.png" alt="Natriumchlorid-Kristall">
-      <div class="stoff-label">Natriumchlorid</div>
-      <div class="stoff-formel">NaCl</div>
-    </div>
-    <div class="stoff-card">
-      <img src="img/diamant.png" alt="Diamant">
-      <div class="stoff-label">Diamant</div>
-      <div class="stoff-formel">C</div>
-    </div>
-  </div>
-
   <table class="data-table">
     <thead>
       <tr><th>Stoff</th><th>Wasser (Eis)</th><th>Natriumchlorid</th><th>Diamant</th></tr>
@@ -874,7 +815,7 @@ section { animation: fadeUp 0.4s ease-out both; }
       <div class="bindung-sub">Nichtmetall + Nichtmetall</div>
       <h4>Kovalente Bindung</h4>
       <img src="img/mint-cl2-molekuel.jpeg" alt="Cl2-Molekül als Beispiel einer kovalenten Bindung">
-      <p>Treffen zwei oder mehrere Elektronenräuber aufeinander, so können keine Elektronen abgegeben werden, sie müssen diese vielmehr untereinander <strong>aufteilen</strong>. Verbinden sich beispielsweise zwei Chloratome miteinander, so ziehen beide Atomkerne die Valenzelektronen beider Atome an. Diese Anziehung der Valenzelektronen durch beide Kerne führt dazu, dass die Atome in einem kleinen Abstand zueinander bleiben. Diese Art chemischer Bindung wird als <strong>kovalente Bindung</strong> bezeichnet [lat. <em>co(n)</em> = mit, <em>valentia</em> = Kraft, Stärke].</p>
+      <p>Beide Atome ziehen Elektronen ähnlich stark an — keiner gibt nach. Sie <strong>teilen</strong> sich gemeinsame Elektronenpaare und bilden so <strong>Moleküle</strong>. Im Wasser (H₂O) hält je ein gemeinsames Elektronenpaar das O-Atom mit einem H-Atom zusammen.</p>
       <span class="beispiel">Prototyp: H₂O, CO₂, O₂</span>
     </div>
 
@@ -886,7 +827,7 @@ section { animation: fadeUp 0.4s ease-out both; }
 
   <figure class="mint-figure">
     <img src="img/mint-tabelle-bindungsarten.jpeg" alt="Übersichtstabelle der drei Bindungsarten (ionisch, metallisch, kovalent)">
-    <figcaption>Tabelle 1: Die drei Bindungsarten. In Anlehnung an: Zwyssig &amp; Lipscher, MINT-Lernzentrum ETH Zürich.</figcaption>
+    <figcaption>Tabelle 1: Die drei Bindungsarten. Quelle: Zwyssig &amp; Lipscher, MINT-Lernzentrum ETH Zürich.</figcaption>
   </figure>
 
   <h3>12.5 Welche Bindung liegt vor? — Interaktiv</h3>
@@ -981,7 +922,7 @@ section { animation: fadeUp 0.4s ease-out both; }
   <p>Mit der chemischen Bindung verlassen wir die Welt der einzelnen Atome und betreten die <strong>Stoffchemie</strong>. Ab jetzt geht es um <em>echte</em> Stoffe — wie sie aufgebaut sind, wie sie miteinander reagieren, welche Eigenschaften daraus entstehen.</p>
 
   <div class="bridge-box">
-    <strong>Ausblick:</strong> In den nächsten Themen (chemische Bindungen, Aufbau und Eigenschaften und Chemische Reaktionen) bauen wir konsequent auf dem Atombau auf. Sie werden sehen: Was wir hier zu Schalen, Valenzelektronen, EN und Bindungen gelernt haben, kommt in nahezu jeder Stunde wieder vor. Das Atom ist die <em>Sprache</em> der Chemie.
+    <strong>Ausblick:</strong> Im nächsten Thema (Stoffchemie / Chemische Reaktionen) bauen wir konsequent auf dem Atombau auf. Sie werden sehen: Was wir hier zu Schalen, Valenzelektronen, EN und Bindungen gelernt haben, kommt in nahezu jeder Stunde wieder vor. Das Atom ist die <em>Sprache</em> der Chemie.
   </div>
 
   <p style="text-align:center; color:var(--text-muted); margin-top:32px; font-size:0.9rem;">

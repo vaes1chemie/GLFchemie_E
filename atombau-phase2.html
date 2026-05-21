@@ -263,10 +263,10 @@ section { animation: fadeUp 0.4s ease-out both; }
   <div class="sidebar-brand"><a href="index.html" style="text-decoration:none; color:inherit;">Atombau</a><small>Chemie GLF · 1. Gymnasium · Va</small><a href="index.html" style="display:inline-flex; align-items:center; gap:4px; font-family:var(--sans); font-size:0.72rem; font-weight:600; color:var(--accent); text-decoration:none; margin-top:8px;">&larr; Themenübersicht</a></div>
 
   <div class="sidebar-phase">Phase 1 · Lektionen 1–3</div>
-  <a href="atombau.html#L1" class="nav-item done"><span class="nav-dot"></span>L1 – Ladungen &amp; innere Struktur</a>
-  <a href="atombau.html#L2" class="nav-item done"><span class="nav-dot"></span>L2 – Streuversuch Rutherford</a>
-  <a href="atombau.html#L3" class="nav-item done"><span class="nav-dot"></span>L3 – Teilchen &amp; Isotope</a>
-  <a href="atombau.html#zusammenfassung" class="nav-item done"><span class="nav-dot"></span>Zusammenfassung</a>
+  <a href="atombau.html#L1" class="nav-item"><span class="nav-dot"></span>L1 – Ladungen &amp; innere Struktur</a>
+  <a href="atombau.html#L2" class="nav-item"><span class="nav-dot"></span>L2 – Streuversuch Rutherford</a>
+  <a href="atombau.html#L3" class="nav-item"><span class="nav-dot"></span>L3 – Teilchen &amp; Isotope</a>
+  <a href="atombau.html#zusammenfassung" class="nav-item"><span class="nav-dot"></span>Zusammenfassung</a>
 
   <div class="sidebar-phase">Phase 2 · Lektionen 4–7</div>
   <a href="#L4" class="nav-item active"><span class="nav-dot"></span>L4 – Schalenmodell (Bohr)</a>
@@ -276,15 +276,15 @@ section { animation: fadeUp 0.4s ease-out both; }
   <a href="#zusammenfassung2" class="nav-item"><span class="nav-dot"></span>Zusammenfassung</a>
 
   <div class="sidebar-phase">Phase 3 · Lektionen 8–10</div>
-  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L8 – PSE <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L8 – Das Periodensystem <span class="lock-icon">&#x1F512;</span></a>
   <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L9 – Trends im PSE <span class="lock-icon">&#x1F512;</span></a>
-  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L10 – Valenzelektronen <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>L10 – Valenzelektronen &amp; Lewis <span class="lock-icon">&#x1F512;</span></a>
   <a class="nav-item locked" data-phase="3"><span class="nav-dot"></span>Zusammenfassung <span class="lock-icon">&#x1F512;</span></a>
 
-
   <div class="sidebar-phase">Phase 4 · Lektionen 11–12</div>
-  <a class="nav-item locked" data-phase="4"><span class="nav-dot"></span>L11 – Repetition <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="4"><span class="nav-dot"></span>L11 – Repetition &amp; Synthese <span class="lock-icon">&#x1F512;</span></a>
   <a class="nav-item locked" data-phase="4"><span class="nav-dot"></span>L12 – Ausblick Bindungstypen <span class="lock-icon">&#x1F512;</span></a>
+  <a class="nav-item locked" data-phase="4"><span class="nav-dot"></span>Abschluss <span class="lock-icon">&#x1F512;</span></a>
 
 </nav>
 
@@ -1060,24 +1060,35 @@ function newElement() {
   loadElement(next);
 }
 
-// === Auto-unlock Phase 3 ===
+// === Auto-unlock: prüft, welche Phase-Dateien existieren ===
 (async function() {
-  try {
-    const res = await fetch('atombau-phase3.html', { method: 'HEAD' });
-    if (res.ok) {
-      const items = document.querySelectorAll('.nav-item[data-phase="3"]');
-      items.forEach(item => {
-        item.classList.remove('locked');
-        item.href = 'atombau-phase3.html';
-        const lock = item.querySelector('.lock-icon');
-        if (lock) lock.remove();
-      });
-      const teaser = document.getElementById('phase3-teaser');
-      if (teaser) {
-        teaser.innerHTML = '<a href="atombau-phase3.html" style="color:var(--accent); text-decoration:none; font-weight:600;">&rarr; <strong>Weiter zu Phase 3:</strong> Valenzelektronen, Periodensystem und Ionenbildung</a>';
+  const phases = [
+    { num: '3', file: 'atombau-phase3.html' },
+    { num: '4', file: 'atombau-phase4.html' }
+  ];
+  for (const phase of phases) {
+    try {
+      const res = await fetch(phase.file, { method: 'HEAD' });
+      if (res.ok) {
+        const items = document.querySelectorAll('.nav-item[data-phase="' + phase.num + '"]');
+        items.forEach(item => {
+          item.classList.remove('locked');
+          item.href = phase.file;
+          const lock = item.querySelector('.lock-icon');
+          if (lock) lock.remove();
+        });
+        // Teaser am Seitenende zu Link machen (nur Phase 3)
+        if (phase.num === '3') {
+          const teaser = document.getElementById('phase3-teaser');
+          if (teaser) {
+            teaser.innerHTML = '<a href="' + phase.file + '" style="color:var(--accent); text-decoration:none; font-weight:600;">&rarr; <strong>Weiter zu Phase 3:</strong> Valenzelektronen, Periodensystem und Ionenbildung</a>';
+          }
+        }
       }
+    } catch (e) {
+      // Datei nicht erreichbar → gesperrt lassen
     }
-  } catch (e) {}
+  }
 })();
 </script>
 </body>
